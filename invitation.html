@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가족식 청첩장</title>
+<style>
+  @font-face {
+    font-family: "Gowun Batang";
+    src: url("fonts/GowunBatang-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  :root {
+    --paper: #FBF8F1;   /* 밝은 아이보리 */
+    --ink: #4A423B;     /* 짙은 회갈색 */
+    --ink-soft: #857A70;
+    --canvas: #E9E6E0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--canvas);
+    font-family: "Gowun Batang", serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .sheet {
+    display: flex; flex-wrap: wrap; gap: 14mm;
+    justify-content: center; padding: 14mm 8mm;
+  }
+  .side-label {
+    font-size: 8pt; letter-spacing: .2em; color: var(--ink-soft);
+    text-align: center; margin-bottom: 4mm;
+  }
+  .card {
+    width: 110mm; height: 170mm;
+    background: var(--paper);
+    outline: .2mm solid #D9D3C8;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    word-break: keep-all;
+  }
+  .sketch path { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── 앞면 ── */
+  .front { padding: 24mm 14mm 19mm; }
+  .front .bowls { width: 34mm; }
+  .poem {
+    margin-top: 13mm;
+    font-size: 10.5pt; line-height: 2.05; letter-spacing: -.01em;
+  }
+  .poet {
+    margin-top: 3.5mm;
+    font-size: 7.5pt; letter-spacing: .12em; color: var(--ink-soft);
+  }
+  .front .body {
+    margin-top: 15mm;
+    font-size: 8.6pt; line-height: 2.05;
+  }
+  .front .body p + p { margin-top: 4.2mm; }
+  .couple {
+    margin-top: auto;
+    font-size: 10pt; letter-spacing: .18em;
+  }
+  .date {
+    margin-top: 4.5mm;
+    font-size: 8pt; letter-spacing: .14em; color: var(--ink-soft);
+  }
+
+  /* ── 뒷면 ── */
+  .back { padding: 34mm 14mm 26mm; }
+  .back .body {
+    font-size: 8.6pt; line-height: 2.05;
+  }
+  .back .body p + p { margin-top: 5mm; }
+  .back .eggplant { width: 19mm; margin: auto 0; }
+  .family {
+    display: grid; grid-template-columns: auto auto auto;
+    column-gap: 1.6mm; row-gap: 2.6mm; align-items: baseline;
+    font-size: 8.6pt;
+  }
+  .family .parents { text-align: right; letter-spacing: .04em; }
+  .family .rel { text-align: left; font-size: 7.6pt; color: var(--ink-soft); }
+  .family .child { text-align: left; font-size: 9.6pt; letter-spacing: .12em; padding-left: 1mm; }
+
+  @page { size: 110mm 170mm; margin: 0; }
+  @media print {
+    body { background: none; }
+    .sheet { display: block; padding: 0; }
+    .side-label { display: none; }
+    .card { outline: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 연필 결: 선을 살짝 흔들고 거칠게 -->
+    <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="2.4" numOctaves="1" seed="9" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 1.45" result="mask"/>
+      <feComposite in="d" in2="mask" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="sheet">
+
+  <!-- 앞면 -->
+  <section>
+    <div class="side-label">FRONT</div>
+    <div class="card front">
+      <svg class="sketch bowls" viewBox="4 0 200 100" filter="url(#pencil)" aria-label="밥그릇 두 개 스케치">
+        <!-- 왼쪽 그릇 -->
+        <g stroke-width="2" opacity=".95">
+          <path d="M14 45 C 16 38, 60 35, 86 40 C 94 42, 92 48, 80 50 C 60 53, 24 52, 15 47"/>
+          <path d="M17 44 C 30 39, 70 38, 88 43" opacity=".45" stroke-width="1"/>
+          <path d="M14 47 C 16 68, 32 82, 49 84 C 66 85, 84 70, 88 46"/>
+          <path d="M16 52 C 22 70, 36 80, 50 82" opacity=".4" stroke-width="1"/>
+          <path d="M40 84 L 41 91 C 48 92, 54 92, 60 90 L 60 83"/>
+        </g>
+        <!-- 오른쪽 그릇 -->
+        <g stroke-width="2" opacity=".95" transform="translate(8 0)">
+          <path d="M104 49 C 108 42, 150 40, 176 45 C 184 47, 182 53, 170 55 C 150 58, 114 57, 106 51"/>
+          <path d="M108 48 C 124 44, 160 43, 178 48" opacity=".45" stroke-width="1"/>
+          <path d="M104 51 C 107 72, 122 86, 139 88 C 157 89, 175 74, 178 50"/>
+          <path d="M170 60 C 166 74, 156 84, 142 86" opacity=".4" stroke-width="1"/>
+          <path d="M130 88 L 131 95 C 138 96, 144 96, 150 94 L 150 87"/>
+        </g>
+        <!-- 김 -->
+        <g stroke-width="1.5" opacity=".8">
+          <path d="M46 32 C 40 26, 52 22, 46 15 C 43 11, 47 8, 46 5"/>
+          <path d="M58 33 C 54 28, 62 25, 58 19"/>
+          <path transform="translate(8 0)" d="M136 36 C 130 30, 142 26, 136 19 C 133 15, 137 12, 136 9"/>
+          <path transform="translate(8 0)" d="M148 37 C 144 32, 152 29, 148 23"/>
+        </g>
+      </svg>
+
+      <div class="poem">
+        아픈 내가 당신의 이름을 지어다가<br>
+        며칠은 먹었다
+      </div>
+      <div class="poet">시인 박준</div>
+
+      <div class="body">
+        <p>함께 밥을 먹고<br>하루의 이야기를 나누겠습니다.</p>
+        <p>매일의 밥처럼 평범하지만<br>없어서는 안 될 사람이 되어<br>서로의 곁에서 살아가겠습니다.</p>
+      </div>
+
+      <div class="couple">김성기 · 공바르미</div>
+      <div class="date">2026년 11월 8일</div>
+    </div>
+  </section>
+
+  <!-- 뒷면 -->
+  <section>
+    <div class="side-label">BACK</div>
+    <div class="card back">
+      <div class="body">
+        <p>직계가족과 함께 작은 예식을 올립니다.</p>
+        <p>모두 모시지 못하는 아쉬움과<br>감사의 마음을 담아 소식을 전합니다.</p>
+        <p>보내주신 마음 간직하며 다정히 살겠습니다.</p>
+      </div>
+
+      <svg class="sketch eggplant" viewBox="0 0 100 120" filter="url(#pencil)" aria-label="가지 스케치">
+        <g stroke-width="2.6" opacity=".95">
+          <!-- 꼭지 -->
+          <path d="M44 26 C 45 18, 49 12, 56 8"/>
+          <path d="M28 36 C 34 27, 46 24, 58 30 C 62 32, 64 36, 66 40"/>
+          <path d="M34 32 L 30 44"/>
+          <path d="M45 28 L 46 42"/>
+          <path d="M57 31 L 64 42"/>
+          <!-- 몸통 -->
+          <path d="M30 40 C 22 56, 26 82, 44 98 C 58 110, 80 110, 82 94 C 84 80, 72 70, 66 58 C 62 50, 62 44, 60 38"/>
+          <path d="M33 50 C 30 68, 38 88, 52 99" opacity=".4" stroke-width="1.3"/>
+        </g>
+      </svg>
+
+      <div class="family">
+        <span class="parents">김진호 · 박금옥</span><span class="rel">의 아들</span><span class="child">김성기</span>
+        <span class="parents">공병익 · 김정자</span><span class="rel">의 딸</span><span class="child">공바르미</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
