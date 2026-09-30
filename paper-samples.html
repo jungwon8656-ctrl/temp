@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>용지 샘플 비교</title>
+<style>
+  @font-face { font-family: "Gowun Batang"; src: url("fonts/GowunBatang-Regular.ttf") format("truetype"); }
+  :root { --ink: #4A423B; --ink-soft: #857A70; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #E4E1DB; font-family: "Gowun Batang", serif; color: var(--ink); padding: 12mm 10mm; }
+  h1 { font-size: 13pt; font-weight: 400; letter-spacing: .1em; text-align: center; }
+  .note { font-size: 7.5pt; color: #6f665e; text-align: center; margin-top: 3mm; line-height: 1.7; }
+  .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10mm 8mm; margin-top: 10mm; width: 360mm; margin-left: auto; margin-right: auto; }
+  .item { width: 110mm; }
+  .card {
+    position: relative; width: 110mm; height: 170mm; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 46mm 14mm 30mm; word-break: keep-all;
+    box-shadow: 0 .4mm 1.6mm rgba(0,0,0,.12);
+  }
+  .card::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; }
+  .poem { font-size: 10.5pt; line-height: 2.05; letter-spacing: -.01em; position: relative; z-index: 1; }
+  .poet { margin-top: 3.5mm; font-size: 7.5pt; letter-spacing: .12em; color: var(--ink-soft); position: relative; z-index: 1; }
+  .body { margin-top: 20mm; font-size: 8.6pt; line-height: 2.05; position: relative; z-index: 1; }
+  .date { margin-top: auto; font-size: 8.6pt; letter-spacing: .16em; position: relative; z-index: 1; }
+  .label { margin-top: 4mm; }
+  .label b { font-weight: 400; font-size: 10.5pt; letter-spacing: .04em; }
+  .label .spec { font-size: 7.5pt; color: #6f665e; margin-top: 1.2mm; }
+  .label p { font-size: 8pt; line-height: 1.75; margin-top: 2mm; }
+
+  /* 용지별 색·질감 (화면용 근사치) */
+  .rendezvous { background: #F8F3E7; }
+  .rendezvous::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .4 0 0 0 0 .33 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .arte { background: #F5EEDF; }
+  .arte::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .3 0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .montblanc { background: #FAF7EF; }
+  .montblanc::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .42 0 0 0 0 .36 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .vannouveau { background: #FBFAF6; }
+  .vannouveau::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .4 0 0 0 0 .38 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .tintoretto { background: #F6F0E2; }
+  .tintoretto::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.045' numOctaves='3' seed='2'/%3E%3CfeDiffuseLighting surfaceScale='2.2' lighting-color='%23fff'%3E%3CfeDistantLight azimuth='45' elevation='58'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: .55; }
+</style>
+</head>
+<body>
+<h1>용지 샘플 비교</h1>
+<p class="note">화면용 근사치입니다. 실제 색·질감은 인쇄소 용지 샘플로 꼭 확인하세요.<br>
+색상·평량 정보 출처: 삼화제지 랑데뷰 제품정보, 북토리·와우프레스·레드프린팅 등 인쇄소 용지 안내</p>
+
+<div class="grid">
+  <div class="item">
+    <div class="card rendezvous">
+      <div class="poem">‘문득 아름다운 것과 마주쳤을 때<br>지금 곁에 있었으면 얼마나 좋을까 하고<br>떠오르는 얼굴이 있다면 그대는<br>사랑하고 있는 것이다’</div>
+      <div class="poet">시인 이문재</div>
+      <div class="body">아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</div>
+      <div class="date">2026년 11월 8일</div>
+    </div>
+    <div class="label"><b>1. 랑데뷰 내추럴</b><div class="spec">청첩장용 평량: 240g / 310g</div><p>가장 많이 쓰이는 고급지. 부드러운 감촉과 두터운 느낌, 옅은 미색. 무난하고 실패가 적음.</p></div>
+  </div>
+  <div class="item">
+    <div class="card arte">
+      <div class="poem">‘문득 아름다운 것과 마주쳤을 때<br>지금 곁에 있었으면 얼마나 좋을까 하고<br>떠오르는 얼굴이 있다면 그대는<br>사랑하고 있는 것이다’</div>
+      <div class="poet">시인 이문재</div>
+      <div class="body">아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</div>
+      <div class="date">2026년 11월 8일</div>
+    </div>
+    <div class="label"><b>2. 아르떼 내추럴</b><div class="spec">청첩장용 평량: 230g / 310g</div><p>은은한 베이지 톤. 랑데뷰와 촉감은 비슷하고 색이 조금 더 따뜻함. 지금 시안의 아이보리와 가장 가까움.</p></div>
+  </div>
+  <div class="item">
+    <div class="card montblanc">
+      <div class="poem">‘문득 아름다운 것과 마주쳤을 때<br>지금 곁에 있었으면 얼마나 좋을까 하고<br>떠오르는 얼굴이 있다면 그대는<br>사랑하고 있는 것이다’</div>
+      <div class="poet">시인 이문재</div>
+      <div class="body">아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</div>
+      <div class="date">2026년 11월 8일</div>
+    </div>
+    <div class="label"><b>3. 몽블랑 화이트</b><div class="spec">청첩장용 평량: 최대 240g</div><p>살짝 아이보리 기가 도는 화이트. 표면이 곱고 글자가 선명함. 두께 선택지가 얇은 편.</p></div>
+  </div>
+  <div class="item">
+    <div class="card vannouveau">
+      <div class="poem">‘문득 아름다운 것과 마주쳤을 때<br>지금 곁에 있었으면 얼마나 좋을까 하고<br>떠오르는 얼굴이 있다면 그대는<br>사랑하고 있는 것이다’</div>
+      <div class="poet">시인 이문재</div>
+      <div class="body">아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</div>
+      <div class="date">2026년 11월 8일</div>
+    </div>
+    <div class="label"><b>4. 반누보 화이트</b><div class="spec">청첩장용 평량: 250g / 273g / 320g</div><p>광택 없는 화이트 계열. 두툼하고 포근한 볼륨감. 아이보리보다 깨끗한 흰색에 가까움.</p></div>
+  </div>
+  <div class="item">
+    <div class="card tintoretto">
+      <div class="poem">‘문득 아름다운 것과 마주쳤을 때<br>지금 곁에 있었으면 얼마나 좋을까 하고<br>떠오르는 얼굴이 있다면 그대는<br>사랑하고 있는 것이다’</div>
+      <div class="poet">시인 이문재</div>
+      <div class="body">아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</div>
+      <div class="date">2026년 11월 8일</div>
+    </div>
+    <div class="label"><b>5. 띤또레또 젯소</b><div class="spec">청첩장용 평량: 250g / 300g</div><p>연한 미색에 펠트 무늬(물결 질감)가 있는 종이. 손으로 만졌을 때 가장 고급스러움. 작은 글씨가 질감에 살짝 묻힐 수 있음.</p></div>
+  </div>
+</div>
+</body>
+</html>
