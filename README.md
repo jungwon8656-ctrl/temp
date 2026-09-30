@@ -16,8 +16,9 @@
 
 ## 인쇄용 파일
 
-- `print/invitation-print-114x174-bleed2mm.pdf` — 인쇄소 전달용 (1쪽 앞면, 2쪽 뒷면)
-  - 작업 크기 114 × 174mm (재단 크기 110 × 170mm + 사방 도련 2mm), TrimBox 설정
+- `print/invitation-print-112x172-bleed1mm.pdf` — 성원애드피아용 (재단 110 × 170 / 작업 112 × 172mm, 도련 1mm)
+- `print/invitation-print-114x174-bleed2mm.pdf` — 도련 2mm를 요구하는 인쇄소용 (작업 114 × 174mm)
+  - 공통: 1쪽 앞면, 2쪽 뒷면, TrimBox 설정, 글자는 벡터(Type0 글꼴 임베딩)
   - 배경색 없음 (종이 색 사용), 글꼴 임베딩, RGB
 - `print/proof-trim-lines.png` — 재단선(빨간 점선) 확인용, 아르떼 내추럴 색 근사
 - 용지: 아르떼 내추럴 310g / 인쇄: 양면 1도(짙은 회갈색, 별색 또는 먹 계열 지정)
