@@ -1,6 +1,6 @@
-# 가족식 청첩장 시안 (110 × 160mm, 양면)
+# 가족식 청첩장 시안 (107 × 157mm, 양면)
 
-- `invitation.html` — 앞면·뒷면 디자인 원본 (브라우저에서 열기, 인쇄 시 110×160mm 2페이지)
+- `invitation.html` — 앞면·뒷면 디자인 원본 (브라우저에서 열기, 인쇄 시 107×157mm 2페이지)
 - `preview/final-front.png`, `preview/final-back.png`, `preview/final-front-back.png` — 최종 미리보기
 - `paper-samples.html`, `preview/paper-samples.png` — 비도공 고급지 5종 비교 (화면용 근사치)
 - 서체: 고운바탕 Gowun Batang (SIL Open Font License)
@@ -13,9 +13,10 @@
 
 시 구절은 인쇄 전 시집 원문과 대조 필요.
 
-## 인쇄용 파일 (재단 110 × 160mm / 작업 112 × 162mm, 도련 1mm)
+## 인쇄용 파일 (재단 107 × 157mm / 작업 109 × 159mm, 도련 1mm)
 
-- `print/invitation-print-112x162-bleed1mm.pdf` — 인쇄소 전달용 벡터 PDF (1쪽 앞면, 2쪽 뒷면, TrimBox 설정, 배경 없음)
+- `print/invitation-print-109x159-bleed1mm.pdf` — 인쇄소 전달용 벡터 PDF (1쪽 앞면, 2쪽 뒷면, TrimBox 설정, 배경 없음)
 - `print/jpg/` — 편집기 업로드용 JPG (흰 바탕)
-  - 1000dpi: 4409 × 6378px (편집기 7000px 제한 이내) / 300dpi: 1323 × 1913px
+  - 1000dpi: 4291 × 6260px (편집기 7000px 제한 이내) / 300dpi: 1287 × 1878px
 - 주문 사양: 아르떼 내추럴화이트 310g(가능 시), 양면 인쇄, 후가공 없음
+- 봉투: 110 × 160mm 반투명 봉투 (카드 107 × 157mm)
