@@ -12,8 +12,8 @@
   }
   :root {
     --paper: #FBF8F1;   /* 밝은 아이보리 */
-    --ink: #4A423B;     /* 짙은 회갈색 */
-    --ink-soft: #857A70;
+    --ink: #3A322C;     /* 짙은 회갈색 (인쇄 대비 강화) */
+    --ink-soft: #6A6057;
     --canvas: #E9E6E0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,6 +23,8 @@
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
   }
+  /* 인쇄 시 획이 얇게 뜨지 않도록 살짝 굵게 */
+  .card { -webkit-text-stroke: 0.22px currentColor; }
   .sheet {
     display: flex; flex-wrap: wrap; gap: 14mm;
     justify-content: center; padding: 14mm 8mm;

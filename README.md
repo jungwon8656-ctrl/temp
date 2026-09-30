@@ -5,7 +5,7 @@
 - `preview/final-110x170.pdf` — 실제 크기 PDF (1쪽 앞면, 2쪽 뒷면), 일러스트 없음
 - `paper-samples.html`, `preview/paper-samples.png` — 비도공 고급지 5종 비교 (화면용 근사치)
 - 서체: 고운바탕 Gowun Batang (SIL Open Font License)
-- 색상: 바탕 #FBF8F1(아이보리), 글씨 #4A423B(회갈색), 보조 #857A70
+- 색상: 바탕 #FBF8F1(아이보리, 화면용), 글씨 #3A322C(짙은 회갈색), 보조 #6A6057 — 인쇄 대비를 위해 진하게 조정
 
 ## 앞면
 
