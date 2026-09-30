@@ -34,7 +34,7 @@
     text-align: center; margin-bottom: 4mm;
   }
   .card {
-    width: 110mm; height: 170mm;
+    width: 110mm; height: 160mm;
     background: var(--paper);
     outline: .2mm solid #D9D3C8;
     display: flex; flex-direction: column; align-items: center;
@@ -43,7 +43,7 @@
   }
 
   /* ── 앞면 ── */
-  .front { padding: 46mm 14mm 30mm; }
+  .front { padding: 42mm 14mm 27mm; }
   .poem {
     font-size: 10.5pt; line-height: 2.05; letter-spacing: -.01em;
   }
@@ -52,7 +52,7 @@
     font-size: 7.5pt; letter-spacing: .12em; color: var(--ink-soft);
   }
   .front .body {
-    margin-top: 20mm;
+    margin-top: 18mm;
     font-size: 8.6pt; line-height: 2.05;
   }
   .front.long { padding: 25mm 14mm 22mm; }
@@ -69,7 +69,7 @@
   }
 
   /* ── 뒷면 ── */
-  .back { padding: 44mm 14mm 40mm; }
+  .back { padding: 41mm 14mm 37mm; }
   .back .body {
     font-size: 8.6pt; line-height: 2.05;
   }
@@ -84,7 +84,7 @@
   .family .rel { text-align: left; font-size: 7.6pt; color: var(--ink-soft); }
   .family .child { text-align: left; font-size: 9.6pt; letter-spacing: .12em; padding-left: 1mm; }
 
-  @page { size: 110mm 170mm; margin: 0; }
+  @page { size: 110mm 160mm; margin: 0; }
   @media print {
     body { background: none; }
     .sheet { display: block; padding: 0; }

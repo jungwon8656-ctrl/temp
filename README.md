@@ -1,8 +1,7 @@
-# 가족식 청첩장 시안 (110 × 170mm, 양면)
+# 가족식 청첩장 시안 (110 × 160mm, 양면)
 
-- `invitation.html` — 앞면·뒷면 디자인 원본 (브라우저에서 열기, 인쇄 시 110×170mm 2페이지)
+- `invitation.html` — 앞면·뒷면 디자인 원본 (브라우저에서 열기, 인쇄 시 110×160mm 2페이지)
 - `preview/final-front.png`, `preview/final-back.png`, `preview/final-front-back.png` — 최종 미리보기
-- `preview/final-110x170.pdf` — 실제 크기 PDF (1쪽 앞면, 2쪽 뒷면), 일러스트 없음
 - `paper-samples.html`, `preview/paper-samples.png` — 비도공 고급지 5종 비교 (화면용 근사치)
 - 서체: 고운바탕 Gowun Batang (SIL Open Font License)
 - 색상: 바탕 #FBF8F1(아이보리, 화면용), 글씨 #3A322C(짙은 회갈색), 보조 #6A6057 — 인쇄 대비를 위해 진하게 조정
@@ -14,15 +13,9 @@
 
 시 구절은 인쇄 전 시집 원문과 대조 필요.
 
-## 인쇄용 파일
+## 인쇄용 파일 (재단 110 × 160mm / 작업 112 × 162mm, 도련 1mm)
 
-- `print/invitation-print-112x172-bleed1mm.pdf` — 성원애드피아용 (재단 110 × 170 / 작업 112 × 172mm, 도련 1mm)
-- `print/invitation-print-114x174-bleed2mm.pdf` — 도련 2mm를 요구하는 인쇄소용 (작업 114 × 174mm)
-  - 공통: 1쪽 앞면, 2쪽 뒷면, TrimBox 설정, 글자는 벡터(Type0 글꼴 임베딩)
-  - 배경색 없음 (종이 색 사용), 글꼴 임베딩, RGB
-- `print/proof-trim-lines.png` — 재단선(빨간 점선) 확인용, 아르떼 내추럴 색 근사
-- 용지: 아르떼 내추럴 310g / 인쇄: 양면 1도(짙은 회갈색, 별색 또는 먹 계열 지정)
-- `print/jpg/` — 편집기 업로드용 JPG (300dpi, RGB, 흰 바탕)
-  - 도련 1mm: 112 × 172mm (1323 × 2031px) / 도련 2mm: 114 × 174mm (1346 × 2055px)
-  - 인쇄소 편집기에 표시된 작업 사이즈와 같은 쪽을 사용
-  - 1000dpi 고해상도판 (편집기 7000px 제한 이내): 112 × 172mm (4409 × 6772px), 114 × 174mm (4488 × 6850px)
+- `print/invitation-print-112x162-bleed1mm.pdf` — 인쇄소 전달용 벡터 PDF (1쪽 앞면, 2쪽 뒷면, TrimBox 설정, 배경 없음)
+- `print/jpg/` — 편집기 업로드용 JPG (흰 바탕)
+  - 1000dpi: 4409 × 6378px (편집기 7000px 제한 이내) / 300dpi: 1323 × 1913px
+- 주문 사양: 아르떼 내추럴화이트 310g(가능 시), 양면 인쇄, 후가공 없음
