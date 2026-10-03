@@ -34,7 +34,7 @@
     text-align: center; margin-bottom: 4mm;
   }
   .card {
-    width: 107mm; height: 157mm;
+    width: 105mm; height: 157mm;
     background: var(--paper);
     outline: .2mm solid #D9D3C8;
     display: flex; flex-direction: column; align-items: center;
@@ -43,17 +43,17 @@
   }
 
   /* ── 앞면 ── */
-  .front { padding: 41mm 13.5mm 26mm; }
+  .front { padding: 38mm 11mm 25mm; }
   .poem {
     font-size: 10.5pt; line-height: 2.05; letter-spacing: -.01em;
   }
   .poet {
     margin-top: 3.5mm;
-    font-size: 7.5pt; letter-spacing: .12em; color: var(--ink-soft);
+    font-size: 7.5pt; letter-spacing: .05em; color: var(--ink-soft);
   }
   .front .body {
     margin-top: 17.5mm;
-    font-size: 8.6pt; line-height: 2.05;
+    font-size: 10.5pt; line-height: 2.05;
   }
   .front.long { padding: 25mm 14mm 22mm; }
   .front.long .poem { font-size: 9.6pt; line-height: 1.95; }
@@ -65,13 +65,13 @@
   .front .body p + p { margin-top: 4.2mm; }
   .date {
     margin-top: auto;
-    font-size: 8.6pt; letter-spacing: .16em;
+    font-size: 10.5pt; letter-spacing: .14em;
   }
 
   /* ── 뒷면 ── */
-  .back { padding: 40mm 13.5mm 36mm; }
+  .back { padding: 36mm 11mm 34mm; }
   .back .body {
-    font-size: 8.6pt; line-height: 2.05;
+    font-size: 10.5pt; line-height: 2.05;
   }
   .back .body p + p { margin-top: 5mm; }
   .back .family { margin-top: auto; }
@@ -84,7 +84,7 @@
   .family .rel { text-align: left; font-size: 7.6pt; color: var(--ink-soft); }
   .family .child { text-align: left; font-size: 9.6pt; letter-spacing: .12em; padding-left: 1mm; }
 
-  @page { size: 107mm 157mm; margin: 0; }
+  @page { size: 105mm 157mm; margin: 0; }
   @media print {
     body { background: none; }
     .sheet { display: block; padding: 0; }
@@ -106,7 +106,7 @@
         떠오르는 얼굴이 있다면 그대는<br>
         사랑하고 있는 것이다’
       </div>
-      <div class="poet">시인 이문재</div>
+      <div class="poet">이문재의 「농담」 중</div>
 
       <div class="body">
         <p>아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</p>
