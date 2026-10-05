@@ -76,6 +76,7 @@
   .gallery { border-top: 1px solid var(--line); padding-left: 20px; padding-right: 20px; }
   .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .pair img { aspect-ratio: 2 / 3; object-fit: cover; }
+  .pair .full { grid-column: 1 / -1; }
   .hint { margin-top: 14px; font-size: 12px; color: var(--ink-soft); }
 
   /* 6. 마무리 */
@@ -148,10 +149,19 @@
   <section class="gallery fade">
     <div class="eyebrow">GALLERY</div>
     <div class="pair">
-      <img src="img/01-cover.jpg" alt="김성기와 공바르미가 나무 아래에서 서로 마주 보는 사진" data-g>
-      <img src="img/03-veil.jpg" alt="베일을 쓴 신부 사진" data-g>
-      <img src="img/04-brick.jpg" alt="벽돌 벽 옆에서 부케를 든 신부 사진" data-g>
-      <img src="img/05-garden.jpg" alt="정원에서 베일을 쓰고 웃는 신부 사진" data-g>
+      <img class="full" src="img/09-couple-studio.jpg" alt="두 사람이 팔짱을 끼고 웃는 정면 사진" loading="lazy" data-g>
+      <img src="img/07-groom.jpg" alt="부케를 뒤로 든 신랑 전신 사진" loading="lazy" data-g>
+      <img src="img/08-bride.jpg" alt="부케를 들고 웃는 신부 전신 사진" loading="lazy" data-g>
+      <img src="img/11-walk.jpg" alt="신부가 신랑 뒤를 따라 걷는 사진" loading="lazy" data-g>
+      <img src="img/10-sofa.jpg" alt="소파에 앉은 신부 사진" loading="lazy" data-g>
+      <img src="img/06-window.jpg" alt="창가에서 신부가 뒤돌아 웃는 사진" loading="lazy" data-g>
+      <img src="img/05-garden.jpg" alt="정원에서 베일을 쓰고 웃는 신부 사진" loading="lazy" data-g>
+      <img src="img/01-cover.jpg" alt="나무 아래에서 서로 마주 보는 사진" loading="lazy" data-g>
+      <img src="img/04-brick.jpg" alt="벽돌 벽 옆에서 부케를 든 신부 사진" loading="lazy" data-g>
+      <img src="img/03-veil.jpg" alt="베일을 쓴 신부 사진" loading="lazy" data-g>
+      <img src="img/14-groom-casual.jpg" alt="나무 벽에 기대 선 신랑 사진" loading="lazy" data-g>
+      <img src="img/12-wood-door.jpg" alt="나무 문 앞에 선 두 사람 사진" loading="lazy" data-g>
+      <img src="img/13-stairs.jpg" alt="손을 잡고 계단을 오르는 두 사람 사진" loading="lazy" data-g>
     </div>
     <div class="hint">사진을 누르면 크게 볼 수 있어요</div>
   </section>
