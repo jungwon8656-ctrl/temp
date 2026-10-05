@@ -37,8 +37,9 @@
 
   /* 1. 커버 */
   .cover { padding: 0 0 60px; }
-  .cover .names { margin-top: 44px; font-size: 22px; letter-spacing: .18em; }
-  .cover .names span { font-size: 13px; color: var(--accent); margin: 0 10px; letter-spacing: .1em; }
+  .cover img { aspect-ratio: 1 / 1; object-fit: cover; object-position: 52% 50%; }
+  .cover .names { margin-top: 44px; font-size: 20px; letter-spacing: .16em; }
+  .cover .names span { color: var(--accent); margin: 0 12px; }
   .cover .when { margin-top: 14px; font-size: 14px; letter-spacing: .14em; color: var(--ink-soft); }
 
   /* 2. 시 */
@@ -56,10 +57,8 @@
   .family .rel { font-size: 12px; color: var(--ink-soft); text-align: left; }
   .family .child { font-size: 16px; letter-spacing: .12em; text-align: left; padding-left: 4px; }
 
-  /* 4. 흑백 사진 */
-  .wide { padding: 0; }
 
-  /* 5. 날짜 */
+  /* 4. 날짜 */
   .cal-title { font-size: 18px; letter-spacing: .12em; }
   .cal-sub { margin-top: 6px; font-size: 13px; color: var(--ink-soft); letter-spacing: .1em; }
   .cal {
@@ -73,16 +72,14 @@
   .cal .day { height: 34px; line-height: 34px; }
   .cal .pick { background: var(--ink); color: var(--paper); border-radius: 50%; width: 34px; margin: 0 auto; }
 
-  /* 6. 갤러리 */
+  /* 5. 갤러리 */
   .gallery { border-top: 1px solid var(--line); padding-left: 20px; padding-right: 20px; }
   .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .pair img { aspect-ratio: 2 / 3; object-fit: cover; }
-  .pair .full { grid-column: 1 / -1; aspect-ratio: 3 / 2; }
   .hint { margin-top: 14px; font-size: 12px; color: var(--ink-soft); }
 
-  /* 7. 마무리 */
-  .ending { padding: 0 0 80px; }
-  .ending p { margin-top: 48px; padding: 0 28px; }
+  /* 6. 마무리 */
+  .ending { border-top: 1px solid var(--line); padding-bottom: 80px; }
   .ending .sign { margin-top: 22px; font-size: 13px; color: var(--ink-soft); letter-spacing: .12em; }
   footer { padding: 0 0 40px; font-size: 11px; color: #B3AA9E; letter-spacing: .1em; background: var(--paper); }
 
@@ -108,8 +105,8 @@
 
   <!-- 1. 커버 -->
   <section class="cover">
-    <img src="img/01-cover.jpg" alt="김성기와 공바르미가 나무 아래에서 서로 마주 보는 사진">
-    <div class="names fade">김성기<span>그리고</span>공바르미</div>
+    <img src="img/02-bw.jpg" alt="두 사람이 나란히 걸어가는 흑백 사진" data-g>
+    <div class="names fade">김성기<span>·</span>공바르미</div>
     <div class="when fade">2026. 11. 8. 일요일</div>
   </section>
 
@@ -131,12 +128,8 @@
     </div>
   </section>
 
-  <!-- 4. 흑백 사진 -->
-  <section class="wide fade">
-    <img src="img/02-bw.jpg" alt="두 사람이 나란히 걸어가는 흑백 사진">
-  </section>
 
-  <!-- 5. 날짜 -->
+  <!-- 4. 날짜 -->
   <section class="fade">
     <div class="eyebrow">THE DAY</div>
     <div class="cal-title">2026년 11월 8일</div>
@@ -151,11 +144,10 @@
     </div>
   </section>
 
-  <!-- 6. 갤러리 -->
+  <!-- 5. 갤러리 -->
   <section class="gallery fade">
     <div class="eyebrow">GALLERY</div>
     <div class="pair">
-      <img class="full" src="img/02-bw.jpg" alt="두 사람이 나란히 걸어가는 흑백 사진" data-g>
       <img src="img/01-cover.jpg" alt="김성기와 공바르미가 나무 아래에서 서로 마주 보는 사진" data-g>
       <img src="img/03-veil.jpg" alt="베일을 쓴 신부 사진" data-g>
       <img src="img/04-brick.jpg" alt="벽돌 벽 옆에서 부케를 든 신부 사진" data-g>
@@ -164,9 +156,8 @@
     <div class="hint">사진을 누르면 크게 볼 수 있어요</div>
   </section>
 
-  <!-- 7. 마무리 -->
+  <!-- 6. 마무리 -->
   <section class="ending fade">
-    <img src="img/05-garden.jpg" alt="정원에서 베일을 쓰고 웃는 신부 사진">
     <p>저희의 새로운 시작을<br>따뜻한 마음으로 지켜봐 주셔서<br>고맙습니다.</p>
     <div class="sign">성기 · 바르미 드림</div>
   </section>
@@ -192,7 +183,7 @@
   });
 
   // 사진 크게 보기 (모든 사진 좌우로 넘김)
-  const imgs = [...document.querySelectorAll('.gallery img[data-g]')];
+  const imgs = [...document.querySelectorAll('main img[data-g]')];
   const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbNum = document.getElementById('lbNum');
   let cur = 0;
   const show = i => {
@@ -200,10 +191,7 @@
     lbImg.src = imgs[cur].src; lbImg.alt = imgs[cur].alt;
     lbNum.textContent = (cur + 1) + ' / ' + imgs.length;
   };
-  // 갤러리 사진뿐 아니라 본문 사진을 눌러도 같은 사진부터 열림
-  document.querySelectorAll('main img').forEach(im => {
-    const i = imgs.findIndex(g => g.getAttribute('src') === im.getAttribute('src'));
-    if (i < 0) return;
+  imgs.forEach((im, i) => {
     im.style.cursor = 'zoom-in';
     im.addEventListener('click', () => { show(i); lb.classList.add('open'); });
   });
