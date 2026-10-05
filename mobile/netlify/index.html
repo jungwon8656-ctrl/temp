@@ -61,11 +61,11 @@
   .greet p + p { margin-top: 20px; }
   .family {
     margin: 44px auto 0; display: inline-grid; grid-template-columns: auto auto auto;
-    column-gap: 6px; row-gap: 12px; align-items: baseline; font-size: 14px;
+    column-gap: 0; row-gap: 12px; align-items: baseline; font-size: 14px;
   }
   .family .parents { text-align: right; }
   .family span { white-space: nowrap; }
-  .family .rel { font-size: 12px; color: var(--ink-soft); text-align: left; }
+  .family .rel { font-size: 12px; color: var(--ink-soft); text-align: left; padding-right: 6px; }
   .family .child { font-size: 16px; letter-spacing: .12em; text-align: left; padding-left: 4px; }
 
 
@@ -193,7 +193,7 @@
   <!-- 6. 계좌번호 -->
   <section class="accounts">
     <details class="acc-group">
-      <summary>신랑측 계좌번호 보기</summary>
+      <summary>신랑 측 계좌번호 보기</summary>
       <div class="acc-row">
         <div class="acc-info"><div class="acc-name"><span class="acc-rel">신랑</span>김성기</div><div class="acc-num">국민은행 <span class="no">530402-01-201505</span></div></div>
         <button type="button" class="copy" data-copy="530402-01-201505" aria-label="김성기 계좌번호 복사">복사</button>
@@ -208,7 +208,7 @@
       </div>
     </details>
     <details class="acc-group">
-      <summary>신부측 계좌번호 보기</summary>
+      <summary>신부 측 계좌번호 보기</summary>
       <div class="acc-row">
         <div class="acc-info"><div class="acc-name"><span class="acc-rel">신부</span>공바르미</div><div class="acc-num">국민은행 <span class="no">910-7105-3370</span></div></div>
         <button type="button" class="copy" data-copy="910-7105-3370" aria-label="공바르미 계좌번호 복사">복사</button>
