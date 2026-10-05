@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김성기 · 공바르미 결혼합니다</title>
+<style>
+  @font-face {
+    font-family: "Gowun Batang";
+    src: url("../fonts/GowunBatang-Regular.ttf") format("truetype");
+  }
+  :root {
+    --paper: #FBF8F1;
+    --ink: #3A322C;
+    --ink-soft: #6A6057;
+    --line: #E3DDD2;
+    --ph: #ECE7DE;
+    --accent: #A58E74;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #E9E6E0;
+    font-family: "Gowun Batang", serif;
+    color: var(--ink);
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 430px; margin: 0 auto; background: var(--paper); text-align: center; }
+  section { padding: 64px 28px; position: relative; }
+  section + section { border-top: 1px solid var(--line); }
+  .eyebrow { font-size: 11px; letter-spacing: .32em; color: var(--accent); margin-bottom: 22px; }
+  p { font-size: 15px; line-height: 2.05; }
+  .soft { color: var(--ink-soft); }
+
+  /* 레이아웃 표시용 */
+  .tag {
+    position: absolute; top: 14px; left: 14px;
+    font: 11px/1 sans-serif; color: #fff; background: #8C7B6A;
+    padding: 5px 8px; border-radius: 3px; letter-spacing: 0;
+  }
+  .tag.opt { background: none; color: #8C7B6A; border: 1px dashed #8C7B6A; }
+  .ph {
+    background: var(--ph); color: #9C9184;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    font: 13px/1.6 sans-serif;
+  }
+  .ph b { font-size: 15px; color: #7E7366; }
+
+  /* 1. 커버 */
+  .cover { padding: 0 0 52px; }
+  .cover .ph { aspect-ratio: 3 / 4; width: 100%; }
+  .cover .names { margin-top: 40px; font-size: 22px; letter-spacing: .18em; }
+  .cover .names span { font-size: 14px; color: var(--accent); margin: 0 10px; }
+  .cover .when { margin-top: 14px; font-size: 14px; letter-spacing: .14em; color: var(--ink-soft); }
+
+  /* 2. 시 */
+  .poem p { font-size: 15px; }
+  .poet { margin-top: 14px; font-size: 12px; color: var(--ink-soft); letter-spacing: .05em; }
+
+  /* 3. 인사말 */
+  .greet p + p { margin-top: 18px; }
+  .family {
+    margin: 40px auto 0; display: inline-grid; grid-template-columns: auto auto auto;
+    column-gap: 6px; row-gap: 12px; align-items: baseline; font-size: 14px;
+  }
+  .family .rel { font-size: 12px; color: var(--ink-soft); text-align: left; }
+  .family .child { font-size: 16px; letter-spacing: .12em; text-align: left; padding-left: 4px; }
+  .family .parents { text-align: right; }
+
+  /* 4. 중간 사진 */
+  .mid { padding: 0; }
+  .mid .ph { aspect-ratio: 4 / 3; width: 100%; }
+
+  /* 5. 캘린더 */
+  .cal-title { font-size: 18px; letter-spacing: .12em; }
+  .cal-sub { margin-top: 6px; font-size: 13px; color: var(--ink-soft); }
+  .cal {
+    margin: 30px auto 0; max-width: 300px;
+    display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 10px;
+    font-size: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .cal .dow { font-size: 12px; color: var(--ink-soft); padding-bottom: 6px; }
+  .cal .sun { color: #B0796B; }
+  .cal .day { height: 34px; line-height: 34px; }
+  .cal .pick { background: var(--ink); color: var(--paper); border-radius: 50%; width: 34px; margin: 0 auto; }
+  .dday { margin-top: 26px; font-size: 14px; }
+  .dday b { color: #B0796B; font-weight: 400; }
+  .count { margin-top: 18px; display: flex; justify-content: center; gap: 14px; font-size: 20px; }
+  .count small { display: block; font-size: 10px; color: var(--ink-soft); letter-spacing: .1em; }
+
+  /* 6. 갤러리 */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .grid .ph { aspect-ratio: 1; font-size: 12px; }
+  .note { margin-top: 14px; font: 12px/1.6 sans-serif; color: #9C9184; }
+
+  /* 7. 연락 / 계좌 */
+  .rows { margin-top: 6px; text-align: left; }
+  .row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 4px; border-bottom: 1px solid var(--line); font-size: 14px;
+  }
+  .row .k { color: var(--ink-soft); font-size: 12px; margin-right: 8px; }
+  .btns { display: flex; gap: 6px; }
+  .btn {
+    font: 12px/1 sans-serif; color: var(--ink); border: 1px solid var(--line);
+    border-radius: 16px; padding: 7px 11px; background: #fff;
+  }
+  .acc {
+    margin-top: 12px; border: 1px solid var(--line); border-radius: 6px;
+    padding: 15px 16px; display: flex; justify-content: space-between; font-size: 14px; background: #fff;
+  }
+
+  /* 8. 방명록 */
+  .msg {
+    text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 16px; margin-top: 10px; font-size: 13px; line-height: 1.8;
+  }
+  .msg .who { font-size: 12px; color: var(--ink-soft); }
+
+  /* 9. 마무리 */
+  .ending { padding: 0 0 64px; }
+  .ending .ph { aspect-ratio: 4 / 5; width: 100%; }
+  .ending p { margin-top: 40px; padding: 0 28px; }
+  .share { margin-top: 32px; display: flex; justify-content: center; gap: 8px; }
+  .share .btn { padding: 11px 18px; font-size: 13px; }
+  footer { padding: 24px 0 36px; font: 11px sans-serif; color: #B3AA9E; background: var(--paper); text-align: center; }
+</style>
+</head>
+<body>
+<main>
+
+  <!-- 1. 커버 -->
+  <section class="cover">
+    <span class="tag">① 커버</span>
+    <div class="ph"><b>사진 A · 메인</b>세로 3:4 · 두 분 정면/전신 컷 추천</div>
+    <div class="names">김성기<span>그리고</span>공바르미</div>
+    <div class="when">2026. 11. 8. 일요일</div>
+  </section>
+
+  <!-- 2. 시 -->
+  <section class="poem">
+    <span class="tag">② 시 인용</span>
+    <p>문득 아름다운 것과 마주쳤을 때<br>지금 곁에 있었으면 얼마나 좋을까 하고<br>떠오르는 얼굴이 있다면 그대는<br>사랑하고 있는 것이다</p>
+    <div class="poet">이문재의 「농담」 중</div>
+  </section>
+
+  <!-- 3. 인사말 + 혼주 -->
+  <section class="greet">
+    <span class="tag">③ 인사말 · 혼주</span>
+    <div class="eyebrow">INVITATION</div>
+    <p>아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</p>
+    <p>직계가족과 함께 작은 예식을 올립니다.<br>모두 모시지 못하는 아쉬움과<br>감사의 마음을 담아 소식을 전합니다.</p>
+    <p>보내주신 마음 간직하며 다정히 살겠습니다.</p>
+    <div class="family">
+      <span class="parents">김진호 · 박금옥</span><span class="rel">의 아들</span><span class="child">김성기</span>
+      <span class="parents">공병익 · 김정자</span><span class="rel">의 딸</span><span class="child">공바르미</span>
+    </div>
+  </section>
+
+  <!-- 4. 중간 사진 -->
+  <section class="mid">
+    <span class="tag">④ 사진</span>
+    <div class="ph"><b>사진 B · 분위기 컷</b>가로 4:3 · 뒷모습/손 클로즈업 등</div>
+  </section>
+
+  <!-- 5. 캘린더 -->
+  <section>
+    <span class="tag">⑤ 날짜 · D-day</span>
+    <div class="eyebrow">THE DAY</div>
+    <div class="cal-title">2026년 11월 8일</div>
+    <div class="cal-sub">일요일 · 시간 / 장소 (입력 예정)</div>
+    <div class="cal">
+      <div class="dow sun">일</div><div class="dow">월</div><div class="dow">화</div><div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow">토</div>
+      <div class="day sun">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div>
+      <div class="day pick">8</div><div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div>
+      <div class="day sun">15</div><div class="day">16</div><div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div>
+      <div class="day sun">22</div><div class="day">23</div><div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div>
+      <div class="day sun">29</div><div class="day">30</div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+    <div class="count">
+      <div>34<small>DAYS</small></div><div>:</div><div>00<small>HOUR</small></div><div>:</div><div>00<small>MIN</small></div>
+    </div>
+    <div class="dday">성기 ♥ 바르미의 결혼식이 <b>34일</b> 남았습니다</div>
+  </section>
+
+  <!-- 6. 갤러리 -->
+  <section>
+    <span class="tag">⑥ 갤러리</span>
+    <div class="eyebrow">GALLERY</div>
+    <div class="grid">
+      <div class="ph">사진 1</div><div class="ph">사진 2</div><div class="ph">사진 3</div>
+      <div class="ph">사진 4</div><div class="ph">사진 5</div><div class="ph">사진 6</div>
+      <div class="ph">사진 7</div><div class="ph">사진 8</div><div class="ph">사진 9</div>
+    </div>
+    <div class="note">6~12장 권장 · 탭하면 크게 보기 + 좌우 넘김</div>
+  </section>
+
+  <!-- 7. 연락하기 -->
+  <section>
+    <span class="tag opt">⑦ 연락하기 · 선택</span>
+    <div class="eyebrow">CONTACT</div>
+    <div class="rows">
+      <div class="row"><span><span class="k">신랑</span>김성기</span><span class="btns"><span class="btn">전화</span><span class="btn">문자</span></span></div>
+      <div class="row"><span><span class="k">신부</span>공바르미</span><span class="btns"><span class="btn">전화</span><span class="btn">문자</span></span></div>
+      <div class="row"><span><span class="k">신랑 측 혼주</span>김진호 · 박금옥</span><span class="btns"><span class="btn">연락</span></span></div>
+      <div class="row"><span><span class="k">신부 측 혼주</span>공병익 · 김정자</span><span class="btns"><span class="btn">연락</span></span></div>
+    </div>
+  </section>
+
+  <!-- 8. 마음 전하실 곳 -->
+  <section>
+    <span class="tag opt">⑧ 마음 전하실 곳 · 선택</span>
+    <div class="eyebrow">WITH HEART</div>
+    <p class="soft" style="font-size:14px">참석이 어려워 마음 전해주실 분들을 위해<br>계좌번호를 안내드립니다.</p>
+    <div class="acc"><span>신랑 측 계좌</span><span class="soft">펼치기 ⌄</span></div>
+    <div class="acc"><span>신부 측 계좌</span><span class="soft">펼치기 ⌄</span></div>
+  </section>
+
+  <!-- 9. 축하 메시지 -->
+  <section>
+    <span class="tag opt">⑨ 축하 메시지(방명록) · 선택</span>
+    <div class="eyebrow">GUESTBOOK</div>
+    <div class="msg"><div class="who">이름 · 날짜</div>결혼 진심으로 축하해요!</div>
+    <div class="msg"><div class="who">이름 · 날짜</div>두 분 행복하세요.</div>
+    <div class="share"><span class="btn">축하 메시지 남기기</span></div>
+  </section>
+
+  <!-- 10. 마무리 -->
+  <section class="ending">
+    <span class="tag">⑩ 마무리 · 공유</span>
+    <div class="ph"><b>사진 C · 엔딩</b>세로 4:5 · 웃는 컷 / 흑백 컷 추천</div>
+    <p>보내주신 마음 간직하며<br>다정히 살겠습니다.</p>
+    <div class="share"><span class="btn">카카오톡 공유</span><span class="btn">링크 복사</span></div>
+  </section>
+
+  <footer>김성기 · 공바르미</footer>
+</main>
+</body>
+</html>
