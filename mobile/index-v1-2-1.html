@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김성기 · 공바르미 결혼합니다</title>
+<meta property="og:title" content="김성기 · 공바르미 결혼합니다">
+<meta property="og:description" content="2026년 11월 8일">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap">
+<style>
+  :root {
+    --paper: #FBF8F1;
+    --ink: #3A322C;
+    --ink-soft: #6A6057;
+    --line: #E3DDD2;
+    --accent: #A58E74;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #E9E6E0;
+    font-family: "Gowun Batang", serif;
+    color: var(--ink);
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 430px; margin: 0 auto; background: var(--paper); text-align: center; overflow: hidden; }
+  section { padding: 72px 28px; }
+  img { display: block; width: 100%; height: auto; }
+  .eyebrow { font-size: 11px; letter-spacing: .32em; color: var(--accent); margin-bottom: 26px; }
+  p { font-size: 15px; line-height: 2.05; }
+
+  /* 등장 효과 */
+  /* 첫 화면 아래 요소만 숨겼다가 스크롤 시 나타남 (JS 없으면 그대로 보임) */
+  .fade { transition: opacity 1.1s ease, transform 1.1s ease; }
+  .fade.pre { opacity: 0; transform: translateY(18px); }
+  @media (prefers-reduced-motion: reduce) { .fade { transition: none; } }
+
+  /* 1. 커버 */
+  .cover { padding: 76px 24px 0; }
+  .cover .names { font-size: 20px; letter-spacing: .16em; }
+  .cover .names span { color: var(--accent); margin: 0 12px; }
+  .cover .when { margin-top: 14px; font-size: 14px; letter-spacing: .14em; color: var(--ink-soft); }
+  .cover img { margin-top: 48px; aspect-ratio: 3 / 2; object-fit: cover; }
+
+  /* 2. 시 */
+  .poem { padding-top: 84px; padding-bottom: 84px; }
+  .poet { margin-top: 16px; font-size: 12px; color: var(--ink-soft); letter-spacing: .05em; }
+
+  /* 3. 인사말 */
+  .greet { border-top: 1px solid var(--line); }
+  .greet p + p { margin-top: 20px; }
+  .family {
+    margin: 44px auto 0; display: inline-grid; grid-template-columns: auto auto auto;
+    column-gap: 6px; row-gap: 12px; align-items: baseline; font-size: 14px;
+  }
+  .family .parents { text-align: right; }
+  .family .rel { font-size: 12px; color: var(--ink-soft); text-align: left; }
+  .family .child { font-size: 16px; letter-spacing: .12em; text-align: left; padding-left: 4px; }
+
+
+  /* 4. 날짜 */
+  .cal-title { font-size: 18px; letter-spacing: .12em; }
+  .cal-sub { margin-top: 6px; font-size: 13px; color: var(--ink-soft); letter-spacing: .1em; }
+  .cal {
+    margin: 30px auto 0; max-width: 300px;
+    display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 8px;
+    font-size: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: 18px 0;
+  }
+  .cal .dow { font-size: 12px; color: var(--ink-soft); padding-bottom: 6px; }
+  .cal .sun { color: #B0796B; }
+  .cal .day { height: 34px; line-height: 34px; }
+  .cal .pick { background: var(--ink); color: var(--paper); border-radius: 50%; width: 34px; margin: 0 auto; }
+
+  /* 5. 갤러리 */
+  .gallery { border-top: 1px solid var(--line); padding-left: 20px; padding-right: 20px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .pair img { aspect-ratio: 2 / 3; object-fit: cover; }
+  .pair .full { grid-column: 1 / -1; }
+  .hint { margin-top: 14px; font-size: 12px; color: var(--ink-soft); }
+
+  /* 6. 마무리 */
+  .ending { border-top: 1px solid var(--line); padding-bottom: 80px; }
+  .ending .sign { margin-top: 22px; font-size: 13px; color: var(--ink-soft); letter-spacing: .12em; }
+  footer { padding: 0 0 40px; font-size: 11px; color: #B3AA9E; letter-spacing: .1em; background: var(--paper); }
+
+  /* 크게 보기 */
+  .lb {
+    position: fixed; inset: 0; background: #14110F; text-align: center;
+    display: none; align-items: center; justify-content: center; z-index: 10;
+  }
+  .lb.open { display: flex; }
+  .lb img { max-width: 100%; max-height: 86vh; width: auto; object-fit: contain; }
+  .lb button {
+    position: absolute; background: none; border: 0; color: #EDE7DD;
+    font: 34px/1 "Gowun Batang", serif; padding: 18px; text-shadow: 0 0 6px rgba(0,0,0,.6); cursor: pointer;
+  }
+  .lb .x { top: 8px; right: 8px; }
+  .lb .prev { left: 0; top: 50%; transform: translateY(-50%); }
+  .lb .next { right: 0; top: 50%; transform: translateY(-50%); }
+  .lb .num { position: absolute; bottom: 22px; left: 0; right: 0; color: #B9B0A4; font-size: 12px; letter-spacing: .2em; }
+</style>
+</head>
+<body>
+<main>
+
+  <!-- 1. 커버 -->
+  <section class="cover">
+    <div class="names">김성기<span>·</span>공바르미</div>
+    <div class="when">2026. 11. 8. 일요일</div>
+    <img src="img/02-bw.jpg" alt="두 사람이 나란히 걸어가는 흑백 사진" data-g>
+  </section>
+
+  <!-- 2. 시 -->
+  <section class="poem fade">
+    <p>문득 아름다운 것과 마주쳤을 때<br>지금 곁에 있었으면 얼마나 좋을까 하고<br>떠오르는 얼굴이 있다면 그대는<br>사랑하고 있는 것이다</p>
+    <div class="poet">이문재의 「농담」 중</div>
+  </section>
+
+  <!-- 3. 인사말 + 혼주 -->
+  <section class="greet fade">
+    <div class="eyebrow">INVITATION</div>
+    <p>아름다운 것 앞에서<br>늘 서로를 떠올리던 저희가<br>이제 함께 살아가려 합니다.</p>
+    <p>직계가족과 함께 작은 예식을 올립니다.<br>모두 모시지 못하는 아쉬움과<br>감사의 마음을 담아 소식을 전합니다.</p>
+    <p>보내주신 마음 간직하며 다정히 살겠습니다.</p>
+    <div class="family">
+      <span class="parents">김진호 · 박금옥</span><span class="rel">의 아들</span><span class="child">김성기</span>
+      <span class="parents">공병익 · 김정자</span><span class="rel">의 딸</span><span class="child">공바르미</span>
+    </div>
+  </section>
+
+
+  <!-- 4. 날짜 -->
+  <section class="fade">
+    <div class="eyebrow">THE DAY</div>
+    <div class="cal-title">2026년 11월 8일</div>
+    <div class="cal-sub">일요일</div>
+    <div class="cal">
+      <div class="dow sun">일</div><div class="dow">월</div><div class="dow">화</div><div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow">토</div>
+      <div class="day sun">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day">6</div><div class="day">7</div>
+      <div class="day pick">8</div><div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day">13</div><div class="day">14</div>
+      <div class="day sun">15</div><div class="day">16</div><div class="day">17</div><div class="day">18</div><div class="day">19</div><div class="day">20</div><div class="day">21</div>
+      <div class="day sun">22</div><div class="day">23</div><div class="day">24</div><div class="day">25</div><div class="day">26</div><div class="day">27</div><div class="day">28</div>
+      <div class="day sun">29</div><div class="day">30</div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+  </section>
+
+  <!-- 5. 갤러리 -->
+  <section class="gallery fade">
+    <div class="eyebrow">GALLERY</div>
+    <div class="pair">
+      <img class="full" src="img/09-couple-studio.jpg" alt="두 사람이 팔짱을 끼고 웃는 정면 사진" loading="lazy" data-g>
+      <img src="img/07-groom.jpg" alt="부케를 뒤로 든 신랑 전신 사진" loading="lazy" data-g>
+      <img src="img/08-bride.jpg" alt="부케를 들고 웃는 신부 전신 사진" loading="lazy" data-g>
+      <img src="img/11-walk.jpg" alt="신부가 신랑 뒤를 따라 걷는 사진" loading="lazy" data-g>
+      <img src="img/10-sofa.jpg" alt="소파에 앉은 신부 사진" loading="lazy" data-g>
+      <img src="img/06-window.jpg" alt="창가에서 신부가 뒤돌아 웃는 사진" loading="lazy" data-g>
+      <img src="img/05-garden.jpg" alt="정원에서 베일을 쓰고 웃는 신부 사진" loading="lazy" data-g>
+      <img src="img/01-cover.jpg" alt="나무 아래에서 서로 마주 보는 사진" loading="lazy" data-g>
+      <img src="img/04-brick.jpg" alt="벽돌 벽 옆에서 부케를 든 신부 사진" loading="lazy" data-g>
+      <img src="img/03-veil.jpg" alt="베일을 쓴 신부 사진" loading="lazy" data-g>
+      <img src="img/14-groom-casual.jpg" alt="나무 벽에 기대 선 신랑 사진" loading="lazy" data-g>
+      <img src="img/12-wood-door.jpg" alt="나무 문 앞에 선 두 사람 사진" loading="lazy" data-g>
+      <img src="img/13-stairs.jpg" alt="손을 잡고 계단을 오르는 두 사람 사진" loading="lazy" data-g>
+    </div>
+    <div class="hint">사진을 누르면 크게 볼 수 있어요</div>
+  </section>
+
+  <!-- 6. 마무리 -->
+  <section class="ending fade">
+    <p>저희의 새로운 시작을<br>따뜻한 마음으로 지켜봐 주셔서<br>고맙습니다.</p>
+    <div class="sign">성기 · 바르미 드림</div>
+  </section>
+
+  <footer>2026. 11. 8.</footer>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-label="사진 크게 보기">
+  <img id="lbImg" alt="">
+  <button class="x" aria-label="닫기">✕</button>
+  <button class="prev" aria-label="이전 사진">‹</button>
+  <button class="next" aria-label="다음 사진">›</button>
+  <div class="num" id="lbNum"></div>
+</div>
+
+<script>
+  // 스크롤 시 서서히 나타나기
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll('.fade').forEach(el => {
+    if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('pre'); io.observe(el); }
+  });
+
+  // 사진 크게 보기 (모든 사진 좌우로 넘김)
+  const imgs = [...document.querySelectorAll('main img[data-g]')];
+  const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbNum = document.getElementById('lbNum');
+  let cur = 0;
+  const show = i => {
+    cur = (i + imgs.length) % imgs.length;
+    lbImg.src = imgs[cur].src; lbImg.alt = imgs[cur].alt;
+    lbNum.textContent = (cur + 1) + ' / ' + imgs.length;
+  };
+  imgs.forEach((im, i) => {
+    im.style.cursor = 'zoom-in';
+    im.addEventListener('click', () => { show(i); lb.classList.add('open'); });
+  });
+  lb.querySelector('.x').onclick = () => lb.classList.remove('open');
+  lb.querySelector('.prev').onclick = e => { e.stopPropagation(); show(cur - 1); };
+  lb.querySelector('.next').onclick = e => { e.stopPropagation(); show(cur + 1); };
+  lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+  let sx = null;
+  lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
+    sx = null;
+  });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') lb.classList.remove('open');
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+</script>
+</body>
+</html>
