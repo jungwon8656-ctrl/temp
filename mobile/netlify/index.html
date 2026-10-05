@@ -6,8 +6,10 @@
 <title>김성기 · 공바르미 결혼합니다</title>
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
-<meta property="og:title" content="김성기 · 공바르미 결혼합니다">
 <meta property="og:url" content="https://with-sb-1108.netlify.app/">
+<meta property="og:title" content="김성기 · 공바르미 결혼합니다">
+<meta property="og:description" content="11월 8일 일요일">
+<meta name="description" content="11월 8일 일요일">
 <meta property="og:image" content="https://with-sb-1108.netlify.app/og-image.jpg">
 <meta property="og:image:secure_url" content="https://with-sb-1108.netlify.app/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -79,8 +81,40 @@
   .pair .full { grid-column: 1 / -1; }
 
   /* 5. 마무리 */
-  .ending { border-top: 1px solid var(--line); padding-bottom: 80px; }
+  .ending { border-top: 1px solid var(--line); padding-bottom: 56px; }
   .ending .sign { margin-top: 22px; font-size: 13px; color: var(--ink-soft); letter-spacing: .12em; }
+
+  /* 6. 계좌번호 */
+  .accounts { padding: 0 20px 72px; display: grid; gap: 10px; text-align: left; }
+  .acc-group { border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+  .acc-group summary {
+    list-style: none; cursor: pointer; padding: 16px 18px; font-size: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .acc-group summary::-webkit-details-marker { display: none; }
+  .acc-group summary::after { content: "⌄"; color: var(--ink-soft); transition: transform .2s; line-height: 1; }
+  .acc-group[open] summary::after { transform: rotate(180deg); }
+  .acc-group summary:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .acc-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 18px; border-top: 1px solid var(--line);
+  }
+  .acc-info { min-width: 0; }
+  .acc-name { font-size: 12px; color: var(--ink-soft); }
+  .acc-num { margin-top: 4px; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .acc-num .no { white-space: nowrap; }
+  .copy {
+    flex: none; font: 12px/1 "Gowun Batang", serif; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
+    padding: 8px 12px; cursor: pointer;
+  }
+  .toast {
+    position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%); background: var(--ink); color: var(--paper);
+    font-size: 13px; padding: 10px 16px; border-radius: 20px;
+    opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 20; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
 
   /* 크게 보기 */
   .lb {
@@ -153,7 +187,42 @@
     <div class="sign">성기 · 바르미 드림</div>
   </section>
 
+  <!-- 6. 계좌번호 -->
+  <section class="accounts">
+    <details class="acc-group">
+      <summary>신랑측 계좌번호 보기</summary>
+      <div class="acc-row">
+        <div class="acc-info"><div class="acc-name">김진호</div><div class="acc-num">농협은행 <span class="no">699-12-052410</span></div></div>
+        <button type="button" class="copy" data-copy="699-12-052410" aria-label="김진호 계좌번호 복사">복사</button>
+      </div>
+      <div class="acc-row">
+        <div class="acc-info"><div class="acc-name">박금옥</div><div class="acc-num">농협은행 <span class="no">351-0688-1760-53</span></div></div>
+        <button type="button" class="copy" data-copy="351-0688-1760-53" aria-label="박금옥 계좌번호 복사">복사</button>
+      </div>
+      <div class="acc-row">
+        <div class="acc-info"><div class="acc-name">김성기</div><div class="acc-num">국민은행 <span class="no">530402-01-201505</span></div></div>
+        <button type="button" class="copy" data-copy="530402-01-201505" aria-label="김성기 계좌번호 복사">복사</button>
+      </div>
+    </details>
+    <details class="acc-group">
+      <summary>신부측 계좌번호 보기</summary>
+      <div class="acc-row">
+        <div class="acc-info"><div class="acc-name">공바르미</div><div class="acc-num">국민은행 <span class="no">910-7105-3370</span></div></div>
+        <button type="button" class="copy" data-copy="910-7105-3370" aria-label="공바르미 계좌번호 복사">복사</button>
+      </div>
+      <div class="acc-row">
+        <div class="acc-info"><div class="acc-name">공병익</div><div class="acc-num">국민은행 <span class="no">933902-01-615286</span></div></div>
+        <button type="button" class="copy" data-copy="933902-01-615286" aria-label="공병익 계좌번호 복사">복사</button>
+      </div>
+      <div class="acc-row">
+        <div class="acc-info"><div class="acc-name">김정자</div><div class="acc-num">국민은행 <span class="no">834702-04-214082</span></div></div>
+        <button type="button" class="copy" data-copy="834702-04-214082" aria-label="김정자 계좌번호 복사">복사</button>
+      </div>
+    </details>
+  </section>
+
 </main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="lb" id="lb" role="dialog" aria-label="사진 크게 보기">
   <img id="lbImg" alt="">
@@ -203,6 +272,24 @@
     if (e.key === 'ArrowLeft') show(cur - 1);
     if (e.key === 'ArrowRight') show(cur + 1);
   });
+  // 계좌번호 복사 (번호만, 대시 포함)
+  const toast = document.getElementById('toast');
+  let tt;
+  const notify = msg => { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1800); };
+  const fallbackCopy = text => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta); return ok;
+  };
+  document.querySelectorAll('.copy').forEach(btn => btn.addEventListener('click', () => {
+    const text = btn.dataset.copy;
+    const done = () => notify('계좌번호가 복사되었습니다');
+    const fail = () => notify(fallbackCopy(text) ? '계좌번호가 복사되었습니다' : '복사하지 못했어요. 번호를 길게 눌러 복사해 주세요');
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fail);
+    else fail();
+  }));
 </script>
 </body>
 </html>
