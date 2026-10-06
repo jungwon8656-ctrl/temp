@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>가족식 청첩장 (양가 부모님용)</title>
+<style>
+  @font-face {
+    font-family: "Gowun Batang";
+    src: url("fonts/GowunBatang-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  :root {
+    --paper: #FBF8F1;   /* 밝은 아이보리 */
+    --ink: #3A322C;     /* 짙은 회갈색 (인쇄 대비 강화) */
+    --ink-soft: #6A6057;
+    --canvas: #E9E6E0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--canvas);
+    font-family: "Gowun Batang", serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 인쇄 시 획이 얇게 뜨지 않도록 살짝 굵게 */
+  .card { -webkit-text-stroke: 0.22px currentColor; }
+  .sheet {
+    display: flex; flex-wrap: wrap; gap: 14mm;
+    justify-content: center; padding: 14mm 8mm;
+  }
+  .side-label {
+    font-size: 8pt; letter-spacing: .2em; color: var(--ink-soft);
+    text-align: center; margin-bottom: 4mm;
+  }
+  .card {
+    width: 105mm; height: 157mm;
+    background: var(--paper);
+    outline: .2mm solid #D9D3C8;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    word-break: keep-all;
+  }
+
+  /* ── 앞면: 혼주 인사말 ── */
+  .front { padding: 21mm 10mm 19mm; justify-content: center; }
+  .letter { font-size: 10.5pt; line-height: 1.9; letter-spacing: -.01em; }
+  .letter p + p { margin-top: 3.6mm; }
+  .letter .greet { margin-bottom: 1mm; }
+
+  /* ── 뒷면: 신랑·신부, 날짜, 혼주 ── */
+  .back { padding: 40mm 11mm 34mm; }
+  .couple { display: grid; grid-template-columns: auto auto; column-gap: 2.4mm; row-gap: 3mm; align-items: baseline; }
+  .couple .role { font-size: 8pt; color: var(--ink-soft); text-align: right; letter-spacing: .1em; }
+  .couple .name { font-size: 12pt; letter-spacing: .16em; text-align: left; }
+  .back .date { margin-top: 8mm; font-size: 10.5pt; letter-spacing: .14em; }
+  .hosts { margin-top: auto; display: grid; grid-template-columns: auto auto auto auto; column-gap: 1.6mm; row-gap: 2.6mm; align-items: baseline; }
+  .hosts .rel { font-size: 7.6pt; color: var(--ink-soft); text-align: right; }
+  .hosts .nm { font-size: 9.6pt; letter-spacing: .1em; text-align: left; padding-right: 2.4mm; }
+  .hosts .nm:last-child, .hosts .nm.end { padding-right: 0; }
+  .sign { margin-top: 4mm; align-self: flex-end; margin-right: 6mm; font-size: 9.6pt; letter-spacing: .2em; }
+
+  @page { size: 105mm 157mm; margin: 0; }
+  @media print {
+    body { background: none; }
+    .sheet { display: block; padding: 0; }
+    .side-label { display: none; }
+    .card { outline: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- 앞면 -->
+  <section>
+    <div class="side-label">FRONT</div>
+    <div class="card front">
+      <div class="letter">
+        <p class="greet">안녕하십니까!</p>
+        <p>저희 자녀들이 소중한 짝을 만나<br>새로운 가정을 이루게 되었습니다.</p>
+        <p>두 사람의 뜻에 따라 양가 직계가족만 모시고<br>조촐하게 예식을 진행할 예정이온데<br>한 분 한 분 모셔서 기쁨을 나누어야 마땅하나,<br>아이들의 뜻을 존중하여 소박하게 치르게 됨을<br>한없이 송구하게 생각합니다.</p>
+        <p>직접 모시지 못해 죄송한 마음을 전하며<br>비록 먼발치에서나마 두 사람의 앞날을<br>따뜻한 마음으로 축복해 주신다면<br>더없는 기쁨으로 간직하겠습니다.</p>
+        <p>항상 행복하시고 건강하시길 기원합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 뒷면 -->
+  <section>
+    <div class="side-label">BACK</div>
+    <div class="card back">
+      <div class="couple">
+        <span class="role">신랑</span><span class="name">김성기</span>
+        <span class="role">신부</span><span class="name">공바르미</span>
+      </div>
+      <div class="date">2026년 11월 8일</div>
+
+      <div class="hosts">
+        <span class="rel">신랑 아버지</span><span class="nm">김진호</span><span class="rel">어머니</span><span class="nm end">박금옥</span>
+        <span class="rel">신부 아버지</span><span class="nm">공병익</span><span class="rel">어머니</span><span class="nm end">김정자</span>
+      </div>
+      <div class="sign">올림</div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
