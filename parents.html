@@ -54,11 +54,12 @@
   .couple .role { font-size: 8pt; color: var(--ink-soft); text-align: right; letter-spacing: .1em; }
   .couple .name { font-size: 12pt; letter-spacing: .16em; text-align: left; }
   .back .date { margin-top: 8mm; font-size: 10.5pt; letter-spacing: .14em; }
-  .hosts { margin-top: auto; display: grid; grid-template-columns: auto auto auto auto; column-gap: 1.6mm; row-gap: 2.6mm; align-items: baseline; }
+  .hosts { position: relative; margin-top: auto; display: grid; grid-template-columns: auto auto auto auto; column-gap: 1.6mm; row-gap: 2.6mm; align-items: baseline; }
   .hosts .rel { font-size: 7.6pt; color: var(--ink-soft); text-align: right; }
   .hosts .nm { font-size: 9.6pt; letter-spacing: .1em; text-align: left; padding-right: 2.4mm; }
   .hosts .nm:last-child, .hosts .nm.end { padding-right: 0; }
-  .sign { margin-top: 4mm; align-self: flex-end; margin-right: 6mm; font-size: 9.6pt; letter-spacing: .2em; }
+  /* 올림은 마지막 이름 뒤에 붙이되, 이름 묶음의 가운데 정렬은 유지 */
+  .hosts .sign { position: absolute; left: 100%; bottom: 0; white-space: nowrap; font-size: 9.6pt; letter-spacing: .1em; padding-left: 2.4mm; }
 
   @page { size: 105mm 157mm; margin: 0; }
   @media print {
@@ -98,9 +99,8 @@
 
       <div class="hosts">
         <span class="rel">신랑 아버지</span><span class="nm">김진호</span><span class="rel">어머니</span><span class="nm end">박금옥</span>
-        <span class="rel">신부 아버지</span><span class="nm">공병익</span><span class="rel">어머니</span><span class="nm end">김정자</span>
+        <span class="rel">신부 아버지</span><span class="nm">공병익</span><span class="rel">어머니</span><span class="nm end">김정자</span><span class="sign">올림</span>
       </div>
-      <div class="sign">올림</div>
     </div>
   </section>
 
