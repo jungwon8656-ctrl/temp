@@ -27,6 +27,7 @@
   main { max-width: 430px; margin: 0 auto; background: var(--paper); text-align: center; overflow: hidden; }
   section { padding: 72px 28px; }
   img { display: block; width: 100%; height: auto; }
+  main img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
   p { font-size: 15px; line-height: 2.05; }
 
   /* 등장 효과 */
@@ -118,21 +119,6 @@
   }
   .toast.show { opacity: 1; }
 
-  /* 크게 보기 */
-  .lb {
-    position: fixed; inset: 0; background: #14110F; text-align: center;
-    display: none; align-items: center; justify-content: center; z-index: 10;
-  }
-  .lb.open { display: flex; }
-  .lb img { max-width: 100%; max-height: 86vh; width: auto; object-fit: contain; }
-  .lb button {
-    position: absolute; background: none; border: 0; color: #EDE7DD;
-    font: 34px/1 "Gowun Batang", serif; padding: 18px; text-shadow: 0 0 6px rgba(0,0,0,.6); cursor: pointer;
-  }
-  .lb .x { top: 8px; right: 8px; }
-  .lb .prev { left: 0; top: 50%; transform: translateY(-50%); }
-  .lb .next { right: 0; top: 50%; transform: translateY(-50%); }
-  .lb .num { position: absolute; bottom: 22px; left: 0; right: 0; color: #B9B0A4; font-size: 12px; letter-spacing: .2em; }
 </style>
 </head>
 <body>
@@ -140,7 +126,7 @@
 
   <!-- 1. 커버 -->
   <section class="cover">
-    <img src="img/02-bw.jpg" alt="두 사람이 나란히 걸어가는 흑백 사진" data-g>
+    <img src="img/02-bw.jpg" alt="두 사람이 나란히 걸어가는 흑백 사진">
     <div class="names fade">김성기<span>·</span>공바르미</div>
     <div class="when fade">2026. 11. 8. 일요일</div>
   </section>
@@ -165,19 +151,19 @@
   <!-- 4. 갤러리 -->
   <section class="gallery fade">
     <div class="pair">
-      <img class="full" src="img/09-couple-studio.jpg" alt="두 사람이 팔짱을 끼고 웃는 정면 사진" loading="lazy" data-g>
-      <img src="img/07-groom.jpg" alt="부케를 뒤로 든 신랑 전신 사진" loading="lazy" data-g>
-      <img src="img/08-bride.jpg" alt="부케를 들고 웃는 신부 전신 사진" loading="lazy" data-g>
-      <img src="img/11-walk.jpg" alt="신부가 신랑 뒤를 따라 걷는 사진" loading="lazy" data-g>
-      <img src="img/10-sofa.jpg" alt="소파에 앉은 신부 사진" loading="lazy" data-g>
-      <img src="img/06-window.jpg" alt="창가에서 신부가 뒤돌아 웃는 사진" loading="lazy" data-g>
-      <img src="img/01-cover.jpg" alt="나무 아래에서 서로 마주 보는 사진" loading="lazy" data-g>
-      <img src="img/05-garden.jpg" alt="정원에서 베일을 쓰고 웃는 신부 사진" loading="lazy" data-g>
-      <img src="img/15-garden-couple.jpg" alt="정원에서 신랑이 신부의 드레스 자락을 들어 주는 사진" loading="lazy" data-g>
-      <img src="img/03-veil.jpg" alt="베일을 쓴 신부 사진" loading="lazy" data-g>
-      <img src="img/14-groom-casual.jpg" alt="나무 벽에 기대 선 신랑 사진" loading="lazy" data-g>
-      <img src="img/12-wood-door.jpg" alt="나무 문 앞에 선 두 사람 사진" loading="lazy" data-g>
-      <img src="img/13-stairs.jpg" alt="손을 잡고 계단을 오르는 두 사람 사진" loading="lazy" data-g>
+      <img class="full" src="img/09-couple-studio.jpg" alt="두 사람이 팔짱을 끼고 웃는 정면 사진" loading="lazy">
+      <img src="img/07-groom.jpg" alt="부케를 뒤로 든 신랑 전신 사진" loading="lazy">
+      <img src="img/08-bride.jpg" alt="부케를 들고 웃는 신부 전신 사진" loading="lazy">
+      <img src="img/11-walk.jpg" alt="신부가 신랑 뒤를 따라 걷는 사진" loading="lazy">
+      <img src="img/10-sofa.jpg" alt="소파에 앉은 신부 사진" loading="lazy">
+      <img src="img/06-window.jpg" alt="창가에서 신부가 뒤돌아 웃는 사진" loading="lazy">
+      <img src="img/01-cover.jpg" alt="나무 아래에서 서로 마주 보는 사진" loading="lazy">
+      <img src="img/05-garden.jpg" alt="정원에서 베일을 쓰고 웃는 신부 사진" loading="lazy">
+      <img src="img/15-garden-couple.jpg" alt="정원에서 신랑이 신부의 드레스 자락을 들어 주는 사진" loading="lazy">
+      <img src="img/03-veil.jpg" alt="베일을 쓴 신부 사진" loading="lazy">
+      <img src="img/14-groom-casual.jpg" alt="나무 벽에 기대 선 신랑 사진" loading="lazy">
+      <img src="img/12-wood-door.jpg" alt="나무 문 앞에 선 두 사람 사진" loading="lazy">
+      <img src="img/13-stairs.jpg" alt="손을 잡고 계단을 오르는 두 사람 사진" loading="lazy">
     </div>
   </section>
 
@@ -225,13 +211,6 @@
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<div class="lb" id="lb" role="dialog" aria-label="사진 크게 보기">
-  <img id="lbImg" alt="">
-  <button class="x" aria-label="닫기">✕</button>
-  <button class="prev" aria-label="이전 사진">‹</button>
-  <button class="next" aria-label="다음 사진">›</button>
-  <div class="num" id="lbNum"></div>
-</div>
 
 <script>
   // 스크롤 시 서서히 나타나기
@@ -242,37 +221,6 @@
     if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('pre'); io.observe(el); }
   });
 
-  // 사진 크게 보기 (모든 사진 좌우로 넘김)
-  const imgs = [...document.querySelectorAll('main img[data-g]')];
-  const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbNum = document.getElementById('lbNum');
-  let cur = 0;
-  const show = i => {
-    cur = (i + imgs.length) % imgs.length;
-    lbImg.src = imgs[cur].src; lbImg.alt = imgs[cur].alt;
-    lbNum.textContent = (cur + 1) + ' / ' + imgs.length;
-  };
-  imgs.forEach((im, i) => {
-    im.style.cursor = 'zoom-in';
-    im.addEventListener('click', () => { show(i); lb.classList.add('open'); });
-  });
-  lb.querySelector('.x').onclick = () => lb.classList.remove('open');
-  lb.querySelector('.prev').onclick = e => { e.stopPropagation(); show(cur - 1); };
-  lb.querySelector('.next').onclick = e => { e.stopPropagation(); show(cur + 1); };
-  lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
-  let sx = null;
-  lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
-  lb.addEventListener('touchend', e => {
-    if (sx === null) return;
-    const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
-    sx = null;
-  });
-  document.addEventListener('keydown', e => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') lb.classList.remove('open');
-    if (e.key === 'ArrowLeft') show(cur - 1);
-    if (e.key === 'ArrowRight') show(cur + 1);
-  });
   // 계좌번호 복사 (번호만, 대시 포함)
   const toast = document.getElementById('toast');
   let tt;
