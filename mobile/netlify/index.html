@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
 <title>김성기 · 공바르미 결혼합니다</title>
 <meta name="robots" content="noindex, nofollow">
@@ -37,6 +37,7 @@
   main { max-width: 430px; margin: 0 auto; background: var(--paper); text-align: center; overflow: hidden; }
   section { padding: 72px 28px; }
   img { display: block; width: 100%; height: auto; }
+  html, body { touch-action: pan-y; -webkit-text-size-adjust: 100%; }
   main img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
   p { font-size: 15px; line-height: 2.05; }
 
@@ -222,6 +223,16 @@
   document.querySelectorAll('.fade').forEach(el => {
     if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('pre'); io.observe(el); }
   });
+
+  // 확대 금지 (두 손가락 확대, 두 번 톡톡 확대)
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
+  document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+  let lastTouch = 0;
+  document.addEventListener('touchend', e => {
+    const now = Date.now();
+    if (now - lastTouch < 300 && !e.target.closest('button, summary')) e.preventDefault();
+    lastTouch = now;
+  }, { passive: false });
 
   // 계좌번호 복사 (번호만, 대시 포함)
   const toast = document.getElementById('toast');
