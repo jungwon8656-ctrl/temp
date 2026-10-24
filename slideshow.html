@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-look="ivory">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -15,25 +15,55 @@
     font-weight: 400;
   }
 
-  /* 레이아웃: 화면 전체 한 장. 사진은 원본 비율 그대로, 남는 자리는 같은 사진을 흐리게 깔아 채움 */
+  /* 레이아웃: 화면 전체 한 장. 인사말은 청첩장 같은 가는 금색 테두리 안에,
+     사진은 원본 비율 그대로 두고 남는 자리는 같은 사진을 흐리게 깔아 채움 */
   :root {
-    --night: #0d0b0a;      /* 프로젝터용 따뜻한 검정 */
-    --ivory: #f4efe5;      /* 청첩장 종이색에서 가져온 글씨색 */
-    --ivory-soft: #bfb4a4;
-    --line: #7d6d5b;       /* 가는 구분선 */
-    --glass: rgba(20, 17, 15, .78);
-    --glass-line: rgba(244, 239, 229, .16);
+    /* 기본: 샴페인 아이보리 (청첩장 종이색 계열) */
+    --ground: #efe6d8;
+    --ground-hi: #fbf7f0;
+    --ink: #3b2f27;
+    --ink-soft: #7d6b5a;
+    --gold: #b0894f;
+    --glass: rgba(251, 247, 240, .88);
+    --glass-line: rgba(59, 47, 39, .14);
+    --hover: rgba(59, 47, 39, .07);
+    --primary-bg: #3b2f27;
+    --primary-fg: #fbf7f0;
+    --field: #fffdf9;
+    --fill-filter: blur(44px) brightness(1.04) saturate(.85);
+    --veil: rgba(239, 230, 216, .5);
+    --cap: #3b2f27;
+    --cap-glow: 0 0 16px rgba(251, 247, 240, .95), 0 0 4px rgba(251, 247, 240, .9);
     --serif: "Gowun Batang", "Gowun Batang Local", "Nanum Myeongjo", "AppleMyungjo", "Batang", serif;
     --sans: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     --fade: 1.6s;
+    color-scheme: light;
+  }
+  /* 선택: 모카 브라운 (조명이 어두운 식당에서 눈부심이 덜함) */
+  :root[data-look="mocha"] {
+    --ground: #2b211c;
+    --ground-hi: #44352b;
+    --ink: #f4ecdf;
+    --ink-soft: #c9b79f;
+    --gold: #c9a46a;
+    --glass: rgba(38, 30, 25, .86);
+    --glass-line: rgba(244, 236, 223, .16);
+    --hover: rgba(244, 236, 223, .1);
+    --primary-bg: #f4ecdf;
+    --primary-fg: #2b211c;
+    --field: #3a2d25;
+    --fill-filter: blur(44px) brightness(.55) saturate(1.05);
+    --veil: rgba(43, 33, 28, .3);
+    --cap: #f4ecdf;
+    --cap-glow: 0 1px 14px rgba(0, 0, 0, .7);
     color-scheme: dark;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   [hidden] { display: none !important; }
   html, body { height: 100%; }
   body {
-    background: var(--night);
-    color: var(--ivory);
+    background: var(--ground);
+    color: var(--ink);
     font-family: var(--serif);
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
@@ -47,24 +77,26 @@
     opacity: 0;
     transition: opacity var(--fade) ease-in-out;
     overflow: hidden;
-    background: var(--night);
+    background: var(--ground);
   }
   .layer.on { opacity: 1; z-index: 1; }
   .layer .bg {
     position: absolute; inset: -6%;
     width: 112%; height: 112%; max-width: none;
     object-fit: cover;
-    filter: blur(42px) brightness(.42) saturate(1.1);
+    filter: var(--fill-filter);
   }
+  .layer .veil { position: absolute; inset: 0; background: var(--veil); }
   .layer .fg {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: contain;
     transform-origin: var(--ox, 50%) var(--oy, 50%);
+    filter: drop-shadow(0 10px 40px rgba(40, 28, 18, .25));
   }
   .layer.kb .fg { animation: drift var(--dur, 8s) linear forwards; }
   @keyframes drift { from { transform: scale(1); } to { transform: scale(1.05); } }
-  .layer.is-msg .bg, .layer.is-msg .fg { display: none; }
+  .layer.is-msg .bg, .layer.is-msg .fg, .layer.is-msg .veil { display: none; }
   .layer:not(.is-msg) .msg { display: none; }
 
   /* ── 인사말 화면 ── */
@@ -72,38 +104,48 @@
     position: absolute; inset: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center;
-    padding: 6vh max(6vw, env(safe-area-inset-right, 0px)) 6vh max(6vw, env(safe-area-inset-left, 0px));
-    background: radial-gradient(ellipse at 50% 45%, #1d1916 0%, var(--night) 70%);
+    padding: 7vh max(8vw, env(safe-area-inset-right, 0px)) 7vh max(8vw, env(safe-area-inset-left, 0px));
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 42%, var(--ground-hi) 0%, transparent 100%),
+      var(--ground);
   }
+  /* 청첩장 테두리처럼 가는 금색 이중선 */
+  .msg::before, .msg::after {
+    content: ""; position: absolute; pointer-events: none;
+    border: 1px solid var(--gold);
+  }
+  .msg::before { inset: 3.6vh 2.6vw; opacity: .55; }
+  .msg::after { inset: calc(3.6vh + 7px) calc(2.6vw + 7px); opacity: .28; }
   .msg .eyebrow {
     font-family: var(--sans);
-    font-size: clamp(11px, 1.15vw, 18px);
+    font-size: clamp(11px, 1.1vw, 18px);
     letter-spacing: .42em; text-indent: .42em;
-    color: var(--ivory-soft);
+    color: var(--gold);
   }
   .msg h1 {
-    margin-top: 3.2vh;
+    margin-top: 2.8vh;
     font-weight: 400;
-    font-size: clamp(28px, 4.6vw, 76px);
-    letter-spacing: .06em;
+    font-size: clamp(28px, 4.2vw, 72px);
+    letter-spacing: .05em;
     text-wrap: balance;
   }
-  .msg .rule { width: clamp(40px, 5vw, 80px); height: 1px; background: var(--line); margin: 4.4vh 0; }
+  .msg .rule { display: flex; align-items: center; gap: 12px; margin: 3.6vh 0; color: var(--gold); }
+  .msg .rule::before, .msg .rule::after { content: ""; width: clamp(28px, 3.4vw, 60px); height: 1px; background: var(--gold); opacity: .7; }
+  .msg .rule span { font-size: clamp(9px, .8vw, 13px); }
   .msg .text {
-    font-size: clamp(16px, 2.05vw, 34px);
-    line-height: 2;
-    color: var(--ivory);
+    font-size: clamp(15px, 1.85vw, 31px);
+    line-height: 1.95;
     max-width: 34em;
   }
-  .msg .text p + p { margin-top: 1.6vh; }
+  .msg .text p + p { margin-top: 1.5vh; }
   .msg .sign {
-    margin-top: 5vh;
-    font-size: clamp(15px, 1.75vw, 28px);
-    letter-spacing: .18em;
-    color: var(--ivory-soft);
+    margin-top: 4.4vh;
+    font-size: clamp(14px, 1.6vw, 26px);
+    letter-spacing: .16em;
+    color: var(--ink-soft);
   }
-  .msg .sign b { font-weight: 400; color: var(--ivory); }
-  .msg.outro h1 { font-size: clamp(34px, 6vw, 100px); letter-spacing: .14em; }
+  .msg .sign b { font-weight: 400; color: var(--ink); }
+  .msg.outro h1 { font-size: clamp(34px, 5.6vw, 96px); letter-spacing: .14em; }
 
   /* ── 사진 위 작은 이름 표기 ── */
   #caption {
@@ -112,23 +154,23 @@
     bottom: calc(3.4vh + env(safe-area-inset-bottom, 0px));
     font-size: clamp(12px, 1.25vw, 20px);
     letter-spacing: .24em;
-    color: var(--ivory);
-    text-shadow: 0 1px 12px rgba(0,0,0,.7);
+    color: var(--cap);
+    text-shadow: var(--cap-glow);
     opacity: 0; transition: opacity 1.2s;
     pointer-events: none;
   }
-  #caption span { color: var(--ivory-soft); margin-left: .8em; letter-spacing: .12em; }
-  body.cap-on.on-photo #caption { opacity: .82; }
+  #caption span { margin-left: .8em; letter-spacing: .12em; opacity: .75; }
+  body.cap-on.on-photo #caption { opacity: .88; }
 
   /* ── 일시정지 표시 ── */
   #pausedTag {
     position: fixed; z-index: 4;
-    top: calc(2.4vh + env(safe-area-inset-top, 0px));
-    right: max(2.4vw, env(safe-area-inset-right, 0px));
+    top: calc(3.6vh + 18px + env(safe-area-inset-top, 0px));
+    right: calc(2.6vw + 18px + env(safe-area-inset-right, 0px));
     font: 600 13px/1 var(--sans); letter-spacing: .12em;
     padding: 8px 12px; border-radius: 999px;
     background: var(--glass); border: 1px solid var(--glass-line);
-    color: var(--ivory-soft);
+    color: var(--ink-soft);
   }
 
   /* ── 마우스를 움직이면 나타나는 조작 막대 ── */
@@ -147,20 +189,20 @@
   }
   body.idle #bar { opacity: 0; pointer-events: none; }
   #bar .count {
-    font-size: 13px; color: var(--ivory-soft);
+    font-size: 13px; color: var(--ink-soft);
     padding: 0 10px; font-variant-numeric: tabular-nums;
   }
   button {
     font: 500 14px/1 var(--sans);
-    color: var(--ivory);
+    color: var(--ink);
     background: transparent;
     border: 1px solid transparent;
     border-radius: 8px;
     padding: 9px 12px;
     cursor: pointer;
   }
-  button:hover { background: rgba(244,239,229,.1); }
-  button:focus-visible { outline: 2px solid var(--ivory-soft); outline-offset: 2px; }
+  button:hover { background: var(--hover); }
+  button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   button:disabled { opacity: .4; cursor: default; }
 
   /* ── 시작 전 준비 창 ── */
@@ -168,35 +210,37 @@
     position: fixed; z-index: 6;
     left: 50%; transform: translateX(-50%);
     bottom: calc(4vh + env(safe-area-inset-bottom, 0px));
-    width: min(640px, calc(100% - 32px));
+    width: min(660px, calc(100% - 32px));
     padding: 22px 22px 18px;
     border-radius: 16px;
     background: var(--glass); border: 1px solid var(--glass-line);
     backdrop-filter: blur(14px);
+    box-shadow: 0 20px 60px rgba(40, 28, 18, .18);
     font-family: var(--sans);
     display: grid; gap: 14px;
   }
-  #setup.drag { border-color: var(--ivory-soft); background: rgba(40,34,30,.9); }
+  #setup.drag { border-color: var(--gold); }
   #setup h2 { font: 600 16px/1.3 var(--sans); }
-  #setup .status { font-size: 14px; color: var(--ivory-soft); line-height: 1.5; }
-  #setup .status b { color: var(--ivory); font-weight: 600; }
+  #setup .status { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+  #setup .status b { color: var(--ink); font-weight: 600; }
+  #setup .status code { font-size: 13px; color: var(--ink); }
   #setup .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   #setup .ghost { border-color: var(--glass-line); }
-  #setup .primary { background: var(--ivory); color: var(--night); font-weight: 700; padding: 11px 20px; }
-  #setup .primary:hover { background: #fff; }
-  #setup label { font-size: 13px; color: var(--ivory-soft); display: flex; align-items: center; gap: 6px; }
+  #setup .primary { background: var(--primary-bg); color: var(--primary-fg); font-weight: 700; padding: 11px 20px; }
+  #setup .primary:hover { opacity: .9; }
+  #setup label { font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; }
   #setup select {
-    font: 14px var(--sans); color: var(--ivory);
-    background: #1e1a17; border: 1px solid var(--glass-line); border-radius: 8px; padding: 7px 8px;
+    font: 14px var(--sans); color: var(--ink);
+    background: var(--field); border: 1px solid var(--glass-line); border-radius: 8px; padding: 7px 8px;
   }
-  #setup .keys { font-size: 12px; color: var(--ivory-soft); line-height: 1.7; }
+  #setup .keys { font-size: 12px; color: var(--ink-soft); line-height: 1.7; }
   #setup kbd {
     font: 11px var(--sans); padding: 1px 6px; border-radius: 4px;
-    border: 1px solid var(--glass-line); color: var(--ivory);
+    border: 1px solid var(--glass-line); color: var(--ink);
   }
   #setup .spacer { flex: 1; }
   #thumbs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
-  #thumbs img { height: 46px; width: auto; border-radius: 4px; flex: none; opacity: .9; }
+  #thumbs img { height: 46px; width: auto; border-radius: 4px; flex: none; }
   input[type=file] { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
@@ -207,28 +251,25 @@
 <body class="cap-on">
 
 <!--
-  ┌───────────────────────────────────────────────────────────┐
-  │  사용법                                                     │
-  │  1) 이 파일을 브라우저(크롬 권장)로 엽니다.                   │
-  │  2) [사진 선택] 또는 [폴더 선택]으로 스튜디오 사진을 고르거나, │
-  │     사진 파일을 화면에 끌어다 놓습니다. (파일 이름 순서로 재생) │
-  │  3) [전체화면으로 시작]을 누릅니다.                           │
-  │                                                             │
-  │  사진을 미리 지정해 두고 싶다면: 이 파일 옆 photos 폴더에      │
-  │  사진을 넣고, 아래 CONFIG.photos 에 파일 이름을 적어 주세요.   │
-  └───────────────────────────────────────────────────────────┘
+  사용법
+  1) 이 파일을 크롬으로 엽니다.
+  2) 사진 넣기 (셋 중 하나)
+     - 이 파일 옆 photos 폴더에 01.jpg, 02.jpg … 처럼 번호 이름으로 넣어 두면 열 때 자동으로 불러옵니다.
+     - [폴더 선택]으로 사진 폴더를 지정합니다. (파일 이름 순서로 재생)
+     - [사진 선택]으로 고르거나, 사진을 화면에 끌어다 놓습니다.
+  3) [전체화면으로 시작]을 누릅니다.
 -->
 
 <!-- 인사말 문구는 여기서 고치면 됩니다 -->
 <template id="tpl-intro">
   <div class="msg intro">
     <div class="eyebrow">2026 . 10 . 24</div>
-    <h1>귀한 걸음 해주셔서 감사합니다</h1>
-    <div class="rule"></div>
+    <h1>함께해 주셔서 고맙습니다</h1>
+    <div class="rule"><span>◆</span></div>
     <div class="text">
-      <p>저희 두 사람은 오는 11월 8일<br>직계가족만 모시고 작은 예식을 올립니다.</p>
-      <p>한 분 한 분 모시지 못하는 아쉬움을<br>오늘 이 저녁 자리로 대신하고자 합니다.</p>
-      <p>보내주신 따뜻한 마음 오래 간직하며<br>서로 아끼고 다정히 살겠습니다.</p>
+      <p>늘 바르미를 아끼고 보듬어 주신 덕분에<br>저희가 이렇게 좋은 인연으로 만났습니다.</p>
+      <p>작은 예식이라 한 분 한 분 모시지 못한 아쉬움을<br>오늘 따뜻한 밥 한 끼로 나누고 싶었습니다.</p>
+      <p>보내주신 사랑 잊지 않고<br>서로 아끼며 웃음 많은 가정 꾸리겠습니다.</p>
     </div>
     <div class="sign"><b>김성기</b> · <b>공바르미</b> 올림</div>
   </div>
@@ -238,16 +279,16 @@
   <div class="msg outro">
     <div class="eyebrow">THANK YOU</div>
     <h1>감사합니다</h1>
-    <div class="rule"></div>
+    <div class="rule"><span>◆</span></div>
     <div class="text">
-      <p>앞으로도 따뜻하게 지켜봐 주세요.</p>
+      <p>오늘 함께해 주신 다정한 마음, 오래 기억하겠습니다.<br>맛있게 드시고 즐거운 시간 보내세요.</p>
     </div>
-    <div class="sign"><b>김성기</b> · <b>공바르미</b></div>
+    <div class="sign"><b>성기</b> · <b>바르미</b> 드림</div>
   </div>
 </template>
 
-<div class="layer is-msg on" id="layerA"><img class="bg" alt=""><img class="fg" alt=""><div class="msg-slot"></div></div>
-<div class="layer is-msg" id="layerB"><img class="bg" alt=""><img class="fg" alt=""><div class="msg-slot"></div></div>
+<div class="layer is-msg on" id="layerA"><img class="bg" alt=""><div class="veil"></div><img class="fg" alt=""><div class="msg-slot"></div></div>
+<div class="layer is-msg" id="layerB"><img class="bg" alt=""><div class="veil"></div><img class="fg" alt=""><div class="msg-slot"></div></div>
 
 <div id="caption">김성기 · 공바르미<span>2026. 11. 8.</span></div>
 <div id="pausedTag" hidden>일시정지</div>
@@ -264,11 +305,11 @@
 
 <section id="setup" aria-label="슬라이드쇼 준비">
   <h2>슬라이드쇼 준비</h2>
-  <div class="status" id="status">스튜디오 사진을 골라 주세요. 사진 파일을 이 화면에 끌어다 놓아도 됩니다.</div>
+  <div class="status" id="status">사진을 찾는 중…</div>
   <div id="thumbs"></div>
   <div class="row">
-    <button class="ghost" id="pickFiles">사진 선택</button>
     <button class="ghost" id="pickFolder">폴더 선택</button>
+    <button class="ghost" id="pickFiles">사진 선택</button>
     <input type="file" id="fileInput" accept="image/*" multiple>
     <input type="file" id="folderInput" webkitdirectory multiple>
     <span class="spacer"></span>
@@ -283,40 +324,46 @@
     </label>
     <label for="order">순서
       <select id="order">
-        <option value="name">파일 이름순</option>
+        <option value="name">이름순</option>
         <option value="shuffle">무작위</option>
+      </select>
+    </label>
+    <label for="look">배경
+      <select id="look">
+        <option value="ivory">아이보리</option>
+        <option value="mocha">모카</option>
       </select>
     </label>
   </div>
   <div class="row">
     <button class="primary" id="start" disabled>전체화면으로 시작</button>
-    <span class="spacer"></span>
   </div>
   <div class="keys">
     <kbd>스페이스</kbd> 멈춤/재생 · <kbd>←</kbd><kbd>→</kbd> 이전/다음 (프레젠터 리모컨 가능) ·
-    <kbd>M</kbd> 인사말 화면에서 멈춤 · <kbd>C</kbd> 이름 표기 켜기/끄기 · <kbd>F</kbd> 전체화면 · <kbd>S</kbd> 이 창
+    <kbd>M</kbd> 인사말 화면에서 멈춤 · <kbd>C</kbd> 이름 표기 · <kbd>T</kbd> 배경 바꾸기 · <kbd>F</kbd> 전체화면 · <kbd>S</kbd> 이 창
   </div>
 </section>
 
 <script>
 /* ───────── 설정 ───────── */
 const CONFIG = {
-  // 미리 지정할 사진 (선택). 예: ["photos/01.jpg", "photos/02.jpg"]
-  // 비워 두면 화면에서 [사진 선택]으로 고르면 됩니다.
-  photos: [],
+  folder: "photos/",  // 이 폴더의 01.jpg, 02.jpg … (또는 1.jpg, 001.jpg) 를 자동으로 불러옴
+  photos: [],         // 직접 지정할 때: ["photos/a.jpg", "photos/b.jpg"]
   interval: 6,        // 사진 한 장당 초
   introSeconds: 15,   // 처음 인사말 화면 시간(초)
   outroSeconds: 10,   // 마지막 감사 화면 시간(초)
   fadeSeconds: 1.6,   // 전환 시간(초)
-  caption: true       // 사진 위 이름 표기
+  caption: true,      // 사진 위 이름 표기
+  look: "ivory"       // 배경: "ivory"(아이보리) 또는 "mocha"(모카)
 };
 
 /* ───────── 상태 ───────── */
 const $ = id => document.getElementById(id);
 const layers = [$('layerA'), $('layerB')];
 let front = 0;
-let photos = [];        // 이미지 주소 목록
-let objectUrls = [];    // 고른 파일로 만든 주소 (교체 시 정리)
+let photos = [];
+let basePhotos = [];
+let objectUrls = [];
 let seq = [];
 let idx = 0;
 let timer = null;
@@ -330,6 +377,16 @@ document.documentElement.style.setProperty('--fade', CONFIG.fadeSeconds + 's');
 if (!CONFIG.caption) document.body.classList.remove('cap-on');
 $('interval').value = String(interval);
 if (!$('interval').value) $('interval').value = '6';
+
+function setLook(look) {
+  document.documentElement.dataset.look = look;
+  $('look').value = look;
+  try { localStorage.setItem('thanks-look', look); } catch (_) {}
+}
+let savedLook = null;
+try { savedLook = localStorage.getItem('thanks-look'); } catch (_) {}
+setLook(savedLook === 'mocha' || savedLook === 'ivory' ? savedLook : CONFIG.look);
+$('look').onchange = e => setLook(e.target.value);
 
 function fillMsg(layer, kind) {
   layer.querySelector('.msg-slot').innerHTML = $('tpl-' + kind).innerHTML;
@@ -348,18 +405,21 @@ function loadImage(url) {
 }
 
 function setPhotos(urls, label) {
+  basePhotos = urls.slice();
   photos = urls.slice();
   if ($('order').value === 'shuffle') shuffle(photos);
   buildSeq();
   renderStatus(label);
 }
 
+const EMPTY_HINT = '스튜디오 사진이 있는 폴더를 지정해 주세요. 사진 파일을 이 화면에 끌어다 놓아도 됩니다.';
+
 function renderStatus(label) {
   const n = photos.length;
   $('start').disabled = n === 0;
   $('status').innerHTML = n
-    ? `<b>사진 ${n}장</b> 준비됨${label ? ' · ' + label : ''}. 처음 인사말 ${CONFIG.introSeconds}초 → 사진 → 감사 화면 순서로 반복합니다.`
-    : '스튜디오 사진을 골라 주세요. 사진 파일을 이 화면에 끌어다 놓아도 됩니다.';
+    ? `<b>사진 ${n}장</b> 준비됨${label ? ' · ' + label : ''}. 인사말 → 사진 → 감사 화면 순서로 반복합니다.`
+    : EMPTY_HINT;
   const t = $('thumbs');
   t.innerHTML = '';
   photos.slice(0, 40).forEach(u => { const im = document.createElement('img'); im.src = u; im.alt = ''; t.appendChild(im); });
@@ -386,13 +446,47 @@ function useFiles(fileList) {
   setPhotos(objectUrls, '파일 이름 순서');
 }
 
+// photos 폴더의 번호 이름 사진 찾기: 첫 장으로 이름 형식을 정한 뒤, 두 장 연속 없을 때까지 이어서 찾음
+async function scanFolder() {
+  const dir = CONFIG.folder;
+  const pads = [2, 1, 3];
+  const exts = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG', 'webp'];
+  const name = (n, pad, ext) => `${dir}${String(n).padStart(pad, '0')}.${ext}`;
+  let fmt = null;
+  for (const pad of pads) {
+    for (const ext of exts) {
+      try { await loadImage(name(1, pad, ext)); fmt = { pad, ext }; break; } catch (_) {}
+    }
+    if (fmt) break;
+  }
+  if (!fmt) return [];
+  const found = [name(1, fmt.pad, fmt.ext)];
+  let misses = 0;
+  for (let n = 2; n <= 500 && misses < 2; n++) {
+    try { found.push(await loadImage(name(n, fmt.pad, fmt.ext))); misses = 0; } catch (_) { misses++; }
+  }
+  return found;
+}
+
+(async () => {
+  let urls = [];
+  if (CONFIG.photos.length) {
+    const rs = await Promise.allSettled(CONFIG.photos.map(loadImage));
+    urls = rs.filter(r => r.status === 'fulfilled').map(r => r.value);
+  } else if (CONFIG.folder) {
+    urls = await scanFolder();
+  }
+  if (objectUrls.length) return;   // 그사이 직접 고른 사진이 있으면 그것을 사용
+  if (urls.length) setPhotos(urls, `${CONFIG.folder} 폴더에서 자동으로 불러옴`);
+  else renderStatus();
+})();
+
 $('pickFiles').onclick = () => $('fileInput').click();
 $('pickFolder').onclick = () => $('folderInput').click();
 $('fileInput').onchange = e => useFiles(e.target.files);
 $('folderInput').onchange = e => useFiles(e.target.files);
 $('order').onchange = () => {
-  const base = objectUrls.length ? objectUrls : CONFIG.photos;
-  if (base.length) setPhotos(base, $('order').value === 'shuffle' ? '무작위 순서' : '파일 이름 순서');
+  if (basePhotos.length) setPhotos(basePhotos, $('order').value === 'shuffle' ? '무작위 순서' : '이름 순서');
 };
 $('interval').onchange = e => { interval = Number(e.target.value) || 6; if (running && !paused) schedule(); };
 
@@ -405,14 +499,6 @@ addEventListener('drop', e => {
   e.preventDefault(); dragDepth = 0; $('setup').classList.remove('drag');
   if (e.dataTransfer && e.dataTransfer.files.length) { pause(true); useFiles(e.dataTransfer.files); }
 });
-
-// 미리 지정한 사진이 있으면 확인 후 사용
-if (CONFIG.photos.length) {
-  Promise.allSettled(CONFIG.photos.map(loadImage)).then(rs => {
-    const ok = rs.filter(r => r.status === 'fulfilled').map(r => r.value);
-    if (ok.length && !objectUrls.length) setPhotos(ok, `photos 폴더 · ${rs.length - ok.length ? (rs.length - ok.length) + '장은 못 찾음' : '모두 확인'}`);
-  });
-}
 
 /* ───────── 재생 ───────── */
 function buildSeq() {
@@ -456,8 +542,7 @@ async function show(i) {
   front = 1 - front;
 
   document.body.classList.toggle('on-photo', item.t === 'photo');
-  const photoNo = item.t === 'photo' ? idx : 0;
-  $('count').textContent = item.t === 'intro' ? '인사말' : item.t === 'outro' ? '감사 화면' : `${photoNo} / ${photos.length}`;
+  $('count').textContent = item.t === 'intro' ? '인사말' : item.t === 'outro' ? '감사 화면' : `${idx} / ${photos.length}`;
 
   // 다음 사진 미리 불러오기
   const after = seq[(idx + 1) % seq.length];
@@ -526,10 +611,8 @@ $('bSetup').onclick = openSetup;
 addEventListener('keydown', e => {
   if (e.target.tagName === 'SELECT') return;
   const k = e.key;
-  if (!running) {
-    if (k === 'Enter' && !$('start').disabled && document.activeElement === document.body) $('start').click();
-    return;
-  }
+  if (k === 't' || k === 'T' || k === 'ㅅ') { setLook($('look').value === 'ivory' ? 'mocha' : 'ivory'); return; }
+  if (!running) return;
   if (k === ' ' || k === 'k' || k === 'K') { e.preventDefault(); pause(!paused); }
   else if (k === 'ArrowRight' || k === 'PageDown' || k === 'ArrowDown') { e.preventDefault(); show(idx + 1); }
   else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'ArrowUp') { e.preventDefault(); show(idx - 1); }
