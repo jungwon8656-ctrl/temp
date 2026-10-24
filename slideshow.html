@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>감사의 저녁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<style>
+  /* 인터넷이 없을 때를 위한 로컬 서체 (청첩장과 같은 고운바탕) */
+  @font-face {
+    font-family: "Gowun Batang Local";
+    src: url("fonts/GowunBatang-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+
+  /* 레이아웃: 화면 전체 한 장. 사진은 원본 비율 그대로, 남는 자리는 같은 사진을 흐리게 깔아 채움 */
+  :root {
+    --night: #0d0b0a;      /* 프로젝터용 따뜻한 검정 */
+    --ivory: #f4efe5;      /* 청첩장 종이색에서 가져온 글씨색 */
+    --ivory-soft: #bfb4a4;
+    --line: #7d6d5b;       /* 가는 구분선 */
+    --glass: rgba(20, 17, 15, .78);
+    --glass-line: rgba(244, 239, 229, .16);
+    --serif: "Gowun Batang", "Gowun Batang Local", "Nanum Myeongjo", "AppleMyungjo", "Batang", serif;
+    --sans: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --fade: 1.6s;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  html, body { height: 100%; }
+  body {
+    background: var(--night);
+    color: var(--ivory);
+    font-family: var(--serif);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+  }
+  body.idle { cursor: none; }
+
+  /* ── 슬라이드 두 장을 번갈아 겹쳐 서서히 전환 ── */
+  .layer {
+    position: fixed; inset: 0;
+    opacity: 0;
+    transition: opacity var(--fade) ease-in-out;
+    overflow: hidden;
+    background: var(--night);
+  }
+  .layer.on { opacity: 1; z-index: 1; }
+  .layer .bg {
+    position: absolute; inset: -6%;
+    width: 112%; height: 112%; max-width: none;
+    object-fit: cover;
+    filter: blur(42px) brightness(.42) saturate(1.1);
+  }
+  .layer .fg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    transform-origin: var(--ox, 50%) var(--oy, 50%);
+  }
+  .layer.kb .fg { animation: drift var(--dur, 8s) linear forwards; }
+  @keyframes drift { from { transform: scale(1); } to { transform: scale(1.05); } }
+  .layer.is-msg .bg, .layer.is-msg .fg { display: none; }
+  .layer:not(.is-msg) .msg { display: none; }
+
+  /* ── 인사말 화면 ── */
+  .msg {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6vh max(6vw, env(safe-area-inset-right, 0px)) 6vh max(6vw, env(safe-area-inset-left, 0px));
+    background: radial-gradient(ellipse at 50% 45%, #1d1916 0%, var(--night) 70%);
+  }
+  .msg .eyebrow {
+    font-family: var(--sans);
+    font-size: clamp(11px, 1.15vw, 18px);
+    letter-spacing: .42em; text-indent: .42em;
+    color: var(--ivory-soft);
+  }
+  .msg h1 {
+    margin-top: 3.2vh;
+    font-weight: 400;
+    font-size: clamp(28px, 4.6vw, 76px);
+    letter-spacing: .06em;
+    text-wrap: balance;
+  }
+  .msg .rule { width: clamp(40px, 5vw, 80px); height: 1px; background: var(--line); margin: 4.4vh 0; }
+  .msg .text {
+    font-size: clamp(16px, 2.05vw, 34px);
+    line-height: 2;
+    color: var(--ivory);
+    max-width: 34em;
+  }
+  .msg .text p + p { margin-top: 1.6vh; }
+  .msg .sign {
+    margin-top: 5vh;
+    font-size: clamp(15px, 1.75vw, 28px);
+    letter-spacing: .18em;
+    color: var(--ivory-soft);
+  }
+  .msg .sign b { font-weight: 400; color: var(--ivory); }
+  .msg.outro h1 { font-size: clamp(34px, 6vw, 100px); letter-spacing: .14em; }
+
+  /* ── 사진 위 작은 이름 표기 ── */
+  #caption {
+    position: fixed; z-index: 3;
+    left: max(3.2vw, env(safe-area-inset-left, 0px));
+    bottom: calc(3.4vh + env(safe-area-inset-bottom, 0px));
+    font-size: clamp(12px, 1.25vw, 20px);
+    letter-spacing: .24em;
+    color: var(--ivory);
+    text-shadow: 0 1px 12px rgba(0,0,0,.7);
+    opacity: 0; transition: opacity 1.2s;
+    pointer-events: none;
+  }
+  #caption span { color: var(--ivory-soft); margin-left: .8em; letter-spacing: .12em; }
+  body.cap-on.on-photo #caption { opacity: .82; }
+
+  /* ── 일시정지 표시 ── */
+  #pausedTag {
+    position: fixed; z-index: 4;
+    top: calc(2.4vh + env(safe-area-inset-top, 0px));
+    right: max(2.4vw, env(safe-area-inset-right, 0px));
+    font: 600 13px/1 var(--sans); letter-spacing: .12em;
+    padding: 8px 12px; border-radius: 999px;
+    background: var(--glass); border: 1px solid var(--glass-line);
+    color: var(--ivory-soft);
+  }
+
+  /* ── 마우스를 움직이면 나타나는 조작 막대 ── */
+  #bar {
+    position: fixed; z-index: 5;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: flex-end;
+    max-width: calc(100% - 32px);
+    padding: 6px;
+    border-radius: 12px;
+    background: var(--glass); border: 1px solid var(--glass-line);
+    backdrop-filter: blur(10px);
+    font-family: var(--sans);
+    transition: opacity .4s;
+  }
+  body.idle #bar { opacity: 0; pointer-events: none; }
+  #bar .count {
+    font-size: 13px; color: var(--ivory-soft);
+    padding: 0 10px; font-variant-numeric: tabular-nums;
+  }
+  button {
+    font: 500 14px/1 var(--sans);
+    color: var(--ivory);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 9px 12px;
+    cursor: pointer;
+  }
+  button:hover { background: rgba(244,239,229,.1); }
+  button:focus-visible { outline: 2px solid var(--ivory-soft); outline-offset: 2px; }
+  button:disabled { opacity: .4; cursor: default; }
+
+  /* ── 시작 전 준비 창 ── */
+  #setup {
+    position: fixed; z-index: 6;
+    left: 50%; transform: translateX(-50%);
+    bottom: calc(4vh + env(safe-area-inset-bottom, 0px));
+    width: min(640px, calc(100% - 32px));
+    padding: 22px 22px 18px;
+    border-radius: 16px;
+    background: var(--glass); border: 1px solid var(--glass-line);
+    backdrop-filter: blur(14px);
+    font-family: var(--sans);
+    display: grid; gap: 14px;
+  }
+  #setup.drag { border-color: var(--ivory-soft); background: rgba(40,34,30,.9); }
+  #setup h2 { font: 600 16px/1.3 var(--sans); }
+  #setup .status { font-size: 14px; color: var(--ivory-soft); line-height: 1.5; }
+  #setup .status b { color: var(--ivory); font-weight: 600; }
+  #setup .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  #setup .ghost { border-color: var(--glass-line); }
+  #setup .primary { background: var(--ivory); color: var(--night); font-weight: 700; padding: 11px 20px; }
+  #setup .primary:hover { background: #fff; }
+  #setup label { font-size: 13px; color: var(--ivory-soft); display: flex; align-items: center; gap: 6px; }
+  #setup select {
+    font: 14px var(--sans); color: var(--ivory);
+    background: #1e1a17; border: 1px solid var(--glass-line); border-radius: 8px; padding: 7px 8px;
+  }
+  #setup .keys { font-size: 12px; color: var(--ivory-soft); line-height: 1.7; }
+  #setup kbd {
+    font: 11px var(--sans); padding: 1px 6px; border-radius: 4px;
+    border: 1px solid var(--glass-line); color: var(--ivory);
+  }
+  #setup .spacer { flex: 1; }
+  #thumbs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+  #thumbs img { height: 46px; width: auto; border-radius: 4px; flex: none; opacity: .9; }
+  input[type=file] { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .layer.kb .fg { animation: none; }
+  }
+</style>
+</head>
+<body class="cap-on">
+
+<!--
+  ┌───────────────────────────────────────────────────────────┐
+  │  사용법                                                     │
+  │  1) 이 파일을 브라우저(크롬 권장)로 엽니다.                   │
+  │  2) [사진 선택] 또는 [폴더 선택]으로 스튜디오 사진을 고르거나, │
+  │     사진 파일을 화면에 끌어다 놓습니다. (파일 이름 순서로 재생) │
+  │  3) [전체화면으로 시작]을 누릅니다.                           │
+  │                                                             │
+  │  사진을 미리 지정해 두고 싶다면: 이 파일 옆 photos 폴더에      │
+  │  사진을 넣고, 아래 CONFIG.photos 에 파일 이름을 적어 주세요.   │
+  └───────────────────────────────────────────────────────────┘
+-->
+
+<!-- 인사말 문구는 여기서 고치면 됩니다 -->
+<template id="tpl-intro">
+  <div class="msg intro">
+    <div class="eyebrow">2026 . 10 . 24</div>
+    <h1>귀한 걸음 해주셔서 감사합니다</h1>
+    <div class="rule"></div>
+    <div class="text">
+      <p>저희 두 사람은 오는 11월 8일<br>직계가족만 모시고 작은 예식을 올립니다.</p>
+      <p>한 분 한 분 모시지 못하는 아쉬움을<br>오늘 이 저녁 자리로 대신하고자 합니다.</p>
+      <p>보내주신 따뜻한 마음 오래 간직하며<br>서로 아끼고 다정히 살겠습니다.</p>
+    </div>
+    <div class="sign"><b>김성기</b> · <b>공바르미</b> 올림</div>
+  </div>
+</template>
+
+<template id="tpl-outro">
+  <div class="msg outro">
+    <div class="eyebrow">THANK YOU</div>
+    <h1>감사합니다</h1>
+    <div class="rule"></div>
+    <div class="text">
+      <p>앞으로도 따뜻하게 지켜봐 주세요.</p>
+    </div>
+    <div class="sign"><b>김성기</b> · <b>공바르미</b></div>
+  </div>
+</template>
+
+<div class="layer is-msg on" id="layerA"><img class="bg" alt=""><img class="fg" alt=""><div class="msg-slot"></div></div>
+<div class="layer is-msg" id="layerB"><img class="bg" alt=""><img class="fg" alt=""><div class="msg-slot"></div></div>
+
+<div id="caption">김성기 · 공바르미<span>2026. 11. 8.</span></div>
+<div id="pausedTag" hidden>일시정지</div>
+
+<div id="bar" hidden>
+  <span class="count" id="count">인사말</span>
+  <button id="bPrev" title="이전 (←)">◀ 이전</button>
+  <button id="bPlay" title="재생/일시정지 (스페이스)">일시정지</button>
+  <button id="bNext" title="다음 (→)">다음 ▶</button>
+  <button id="bMsg" title="인사말 화면으로 (M)">인사말</button>
+  <button id="bFull" title="전체화면 (F)">전체화면</button>
+  <button id="bSetup" title="사진·설정 (S)">설정</button>
+</div>
+
+<section id="setup" aria-label="슬라이드쇼 준비">
+  <h2>슬라이드쇼 준비</h2>
+  <div class="status" id="status">스튜디오 사진을 골라 주세요. 사진 파일을 이 화면에 끌어다 놓아도 됩니다.</div>
+  <div id="thumbs"></div>
+  <div class="row">
+    <button class="ghost" id="pickFiles">사진 선택</button>
+    <button class="ghost" id="pickFolder">폴더 선택</button>
+    <input type="file" id="fileInput" accept="image/*" multiple>
+    <input type="file" id="folderInput" webkitdirectory multiple>
+    <span class="spacer"></span>
+    <label for="interval">사진당
+      <select id="interval">
+        <option value="4">4초</option>
+        <option value="6" selected>6초</option>
+        <option value="8">8초</option>
+        <option value="10">10초</option>
+        <option value="15">15초</option>
+      </select>
+    </label>
+    <label for="order">순서
+      <select id="order">
+        <option value="name">파일 이름순</option>
+        <option value="shuffle">무작위</option>
+      </select>
+    </label>
+  </div>
+  <div class="row">
+    <button class="primary" id="start" disabled>전체화면으로 시작</button>
+    <span class="spacer"></span>
+  </div>
+  <div class="keys">
+    <kbd>스페이스</kbd> 멈춤/재생 · <kbd>←</kbd><kbd>→</kbd> 이전/다음 (프레젠터 리모컨 가능) ·
+    <kbd>M</kbd> 인사말 화면에서 멈춤 · <kbd>C</kbd> 이름 표기 켜기/끄기 · <kbd>F</kbd> 전체화면 · <kbd>S</kbd> 이 창
+  </div>
+</section>
+
+<script>
+/* ───────── 설정 ───────── */
+const CONFIG = {
+  // 미리 지정할 사진 (선택). 예: ["photos/01.jpg", "photos/02.jpg"]
+  // 비워 두면 화면에서 [사진 선택]으로 고르면 됩니다.
+  photos: [],
+  interval: 6,        // 사진 한 장당 초
+  introSeconds: 15,   // 처음 인사말 화면 시간(초)
+  outroSeconds: 10,   // 마지막 감사 화면 시간(초)
+  fadeSeconds: 1.6,   // 전환 시간(초)
+  caption: true       // 사진 위 이름 표기
+};
+
+/* ───────── 상태 ───────── */
+const $ = id => document.getElementById(id);
+const layers = [$('layerA'), $('layerB')];
+let front = 0;
+let photos = [];        // 이미지 주소 목록
+let objectUrls = [];    // 고른 파일로 만든 주소 (교체 시 정리)
+let seq = [];
+let idx = 0;
+let timer = null;
+let paused = false;
+let running = false;
+let token = 0;
+let interval = CONFIG.interval;
+let wakeLock = null;
+
+document.documentElement.style.setProperty('--fade', CONFIG.fadeSeconds + 's');
+if (!CONFIG.caption) document.body.classList.remove('cap-on');
+$('interval').value = String(interval);
+if (!$('interval').value) $('interval').value = '6';
+
+function fillMsg(layer, kind) {
+  layer.querySelector('.msg-slot').innerHTML = $('tpl-' + kind).innerHTML;
+  layer.classList.add('is-msg');
+}
+fillMsg(layers[0], 'intro');
+
+/* ───────── 사진 불러오기 ───────── */
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const im = new Image();
+    im.onload = () => (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(() => resolve(url));
+    im.onerror = () => reject(url);
+    im.src = url;
+  });
+}
+
+function setPhotos(urls, label) {
+  photos = urls.slice();
+  if ($('order').value === 'shuffle') shuffle(photos);
+  buildSeq();
+  renderStatus(label);
+}
+
+function renderStatus(label) {
+  const n = photos.length;
+  $('start').disabled = n === 0;
+  $('status').innerHTML = n
+    ? `<b>사진 ${n}장</b> 준비됨${label ? ' · ' + label : ''}. 처음 인사말 ${CONFIG.introSeconds}초 → 사진 → 감사 화면 순서로 반복합니다.`
+    : '스튜디오 사진을 골라 주세요. 사진 파일을 이 화면에 끌어다 놓아도 됩니다.';
+  const t = $('thumbs');
+  t.innerHTML = '';
+  photos.slice(0, 40).forEach(u => { const im = document.createElement('img'); im.src = u; im.alt = ''; t.appendChild(im); });
+}
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function isImage(f) {
+  return (f.type && f.type.startsWith('image/')) || /\.(jpe?g|png|webp|gif|avif|bmp)$/i.test(f.name);
+}
+
+function useFiles(fileList) {
+  const files = Array.from(fileList).filter(isImage)
+    .sort((a, b) => (a.webkitRelativePath || a.name).localeCompare(b.webkitRelativePath || b.name, undefined, { numeric: true }));
+  if (!files.length) {
+    $('status').textContent = '사진 파일을 찾지 못했어요. JPG·PNG 사진을 골라 주세요. (아이폰 HEIC 사진은 JPG로 바꿔서 넣어 주세요.)';
+    return;
+  }
+  objectUrls.forEach(u => URL.revokeObjectURL(u));
+  objectUrls = files.map(f => URL.createObjectURL(f));
+  setPhotos(objectUrls, '파일 이름 순서');
+}
+
+$('pickFiles').onclick = () => $('fileInput').click();
+$('pickFolder').onclick = () => $('folderInput').click();
+$('fileInput').onchange = e => useFiles(e.target.files);
+$('folderInput').onchange = e => useFiles(e.target.files);
+$('order').onchange = () => {
+  const base = objectUrls.length ? objectUrls : CONFIG.photos;
+  if (base.length) setPhotos(base, $('order').value === 'shuffle' ? '무작위 순서' : '파일 이름 순서');
+};
+$('interval').onchange = e => { interval = Number(e.target.value) || 6; if (running && !paused) schedule(); };
+
+// 끌어다 놓기
+let dragDepth = 0;
+addEventListener('dragenter', e => { e.preventDefault(); dragDepth++; $('setup').hidden = false; $('setup').classList.add('drag'); });
+addEventListener('dragleave', () => { if (--dragDepth <= 0) { dragDepth = 0; $('setup').classList.remove('drag'); } });
+addEventListener('dragover', e => e.preventDefault());
+addEventListener('drop', e => {
+  e.preventDefault(); dragDepth = 0; $('setup').classList.remove('drag');
+  if (e.dataTransfer && e.dataTransfer.files.length) { pause(true); useFiles(e.dataTransfer.files); }
+});
+
+// 미리 지정한 사진이 있으면 확인 후 사용
+if (CONFIG.photos.length) {
+  Promise.allSettled(CONFIG.photos.map(loadImage)).then(rs => {
+    const ok = rs.filter(r => r.status === 'fulfilled').map(r => r.value);
+    if (ok.length && !objectUrls.length) setPhotos(ok, `photos 폴더 · ${rs.length - ok.length ? (rs.length - ok.length) + '장은 못 찾음' : '모두 확인'}`);
+  });
+}
+
+/* ───────── 재생 ───────── */
+function buildSeq() {
+  seq = [{ t: 'intro' }, ...photos.map(u => ({ t: 'photo', u })), { t: 'outro' }];
+}
+
+function durationOf(item) {
+  if (item.t === 'intro') return CONFIG.introSeconds;
+  if (item.t === 'outro') return CONFIG.outroSeconds;
+  return interval;
+}
+
+async function show(i) {
+  if (!seq.length) return;
+  const my = ++token;
+  idx = (i + seq.length) % seq.length;
+  const item = seq[idx];
+  clearTimeout(timer);
+
+  const next = layers[1 - front];
+  if (item.t === 'photo') {
+    try { await loadImage(item.u); } catch (_) {
+      if (my === token) show(idx + 1);   // 열리지 않는 사진은 건너뜀
+      return;
+    }
+    if (my !== token) return;
+    next.classList.remove('is-msg');
+    next.querySelector('.bg').src = item.u;
+    next.querySelector('.fg').src = item.u;
+    next.style.setProperty('--ox', (30 + Math.random() * 40) + '%');
+    next.style.setProperty('--oy', (30 + Math.random() * 40) + '%');
+  } else {
+    fillMsg(next, item.t);
+  }
+
+  const total = durationOf(item) + CONFIG.fadeSeconds * 2;
+  next.style.setProperty('--dur', total + 's');
+  next.classList.remove('kb'); void next.offsetWidth; next.classList.add('kb');
+  next.classList.add('on');
+  layers[front].classList.remove('on');
+  front = 1 - front;
+
+  document.body.classList.toggle('on-photo', item.t === 'photo');
+  const photoNo = item.t === 'photo' ? idx : 0;
+  $('count').textContent = item.t === 'intro' ? '인사말' : item.t === 'outro' ? '감사 화면' : `${photoNo} / ${photos.length}`;
+
+  // 다음 사진 미리 불러오기
+  const after = seq[(idx + 1) % seq.length];
+  if (after && after.t === 'photo') loadImage(after.u).catch(() => {});
+
+  if (!paused) schedule();
+}
+
+function schedule() {
+  clearTimeout(timer);
+  if (!seq.length) return;
+  timer = setTimeout(() => show(idx + 1), durationOf(seq[idx]) * 1000);
+}
+
+function pause(on) {
+  paused = on;
+  $('pausedTag').hidden = !(on && running);
+  $('bPlay').textContent = on ? '재생' : '일시정지';
+  if (on) clearTimeout(timer); else schedule();
+}
+
+function holdMessage() {
+  if (!running) return;
+  pause(true);
+  if (seq[idx] && seq[idx].t !== 'intro') show(0);
+}
+
+async function toggleFull() {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  } catch (_) { /* 전체화면을 지원하지 않는 환경은 그대로 진행 */ }
+}
+
+async function keepAwake() {
+  try { if ('wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen'); } catch (_) {}
+}
+document.addEventListener('visibilitychange', () => { if (running && document.visibilityState === 'visible') keepAwake(); });
+
+$('start').onclick = async () => {
+  if (!photos.length) return;
+  buildSeq();
+  $('setup').hidden = true;
+  $('bar').hidden = false;
+  running = true;
+  await toggleFull();
+  keepAwake();
+  pause(false);
+  show(0);
+  nudgeIdle();
+};
+
+function openSetup() {
+  pause(true);
+  $('pausedTag').hidden = true;
+  $('setup').hidden = false;
+}
+
+$('bPrev').onclick = () => show(idx - 1);
+$('bNext').onclick = () => show(idx + 1);
+$('bPlay').onclick = () => pause(!paused);
+$('bMsg').onclick = holdMessage;
+$('bFull').onclick = toggleFull;
+$('bSetup').onclick = openSetup;
+
+addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  const k = e.key;
+  if (!running) {
+    if (k === 'Enter' && !$('start').disabled && document.activeElement === document.body) $('start').click();
+    return;
+  }
+  if (k === ' ' || k === 'k' || k === 'K') { e.preventDefault(); pause(!paused); }
+  else if (k === 'ArrowRight' || k === 'PageDown' || k === 'ArrowDown') { e.preventDefault(); show(idx + 1); }
+  else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'ArrowUp') { e.preventDefault(); show(idx - 1); }
+  else if (k === 'Home') show(0);
+  else if (k === 'End') show(seq.length - 1);
+  else if (k === 'm' || k === 'M' || k === 'ㅡ') holdMessage();
+  else if (k === 'c' || k === 'C' || k === 'ㅊ') document.body.classList.toggle('cap-on');
+  else if (k === 'f' || k === 'F' || k === 'ㄹ') toggleFull();
+  else if (k === 's' || k === 'S' || k === 'ㄴ') { $('setup').hidden ? openSetup() : ($('setup').hidden = true); }
+  else if (k === 'Escape' && !$('setup').hidden) $('setup').hidden = true;
+});
+
+// 마우스가 멈추면 커서와 조작 막대 숨김
+let idleTimer = null;
+function nudgeIdle() {
+  document.body.classList.remove('idle');
+  clearTimeout(idleTimer);
+  if (running) idleTimer = setTimeout(() => { if ($('setup').hidden) document.body.classList.add('idle'); }, 2500);
+}
+addEventListener('mousemove', nudgeIdle);
+addEventListener('touchstart', nudgeIdle, { passive: true });
+</script>
+</body>
+</html>
