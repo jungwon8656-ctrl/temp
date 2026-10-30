@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>오늘의 코스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f7f1e6;
+    --ink: #3b2f2a;
+    --muted: #8a7b70;
+    --line: #d9cbb8;
+    --accent: #9c4a3c;
+    --night: #120f0e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Nanum Myeongjo", serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .screen { min-height: 100dvh; padding: 48px 24px 40px; display: flex; flex-direction: column; align-items: center; }
+  .hidden { display: none !important; }
+
+  /* 코스 메뉴판 */
+  .menu { max-width: 400px; width: 100%; text-align: center; }
+  .eyebrow { font-size: 12px; letter-spacing: .3em; color: var(--muted); }
+  h1 { font-size: 28px; font-weight: 700; margin: 12px 0 6px; }
+  .for { font-family: "Nanum Pen Script", cursive; font-size: 26px; color: var(--accent); }
+  .divider { width: 48px; height: 1px; background: var(--line); margin: 28px auto; }
+  .course { padding: 16px 0; border-bottom: 1px dashed var(--line); }
+  .course:last-of-type { border-bottom: none; }
+  .course small { display: block; font-size: 11px; letter-spacing: .25em; color: var(--muted); margin-bottom: 6px; }
+  .course p { font-size: 17px; }
+  .last { margin-top: 28px; padding: 24px 18px; border: 1px solid var(--accent); border-radius: 4px; }
+  .last small { color: var(--accent); }
+  .last p { font-size: 18px; font-weight: 700; margin: 6px 0 4px; }
+  .last span { font-size: 13px; color: var(--muted); }
+  button.open {
+    margin-top: 18px; width: 100%; padding: 16px; border: none; border-radius: 4px;
+    background: var(--accent); color: #fff; font: inherit; font-size: 16px; font-weight: 700;
+    cursor: pointer;
+  }
+  .note { margin-top: 18px; font-size: 12px; color: var(--muted); }
+
+  /* 로딩 */
+  #loading { position: fixed; inset: 0; background: var(--paper); justify-content: center; text-align: center; z-index: 3; transition: opacity .8s; }
+  #loading p { font-family: "Nanum Pen Script", cursive; font-size: 30px; margin-top: 20px; }
+  .dots span { display: inline-block; width: 8px; height: 8px; margin: 0 4px; border-radius: 50%; background: var(--accent); animation: blink 1.2s infinite; }
+  .dots span:nth-child(2) { animation-delay: .2s; }
+  .dots span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+
+  /* 영상 */
+  #stage { position: fixed; inset: 0; background: var(--night); z-index: 2; display: flex; align-items: center; justify-content: center; }
+  #stage video { width: 100%; height: 100%; object-fit: contain; }
+  #tapToPlay { position: absolute; padding: 14px 28px; border: 1px solid #fff; border-radius: 40px; background: transparent; color: #fff; font: inherit; font-size: 16px; }
+
+  /* 엔딩 */
+  #ending { position: fixed; inset: 0; background: var(--night); color: #f7f1e6; justify-content: center; text-align: center; z-index: 4; opacity: 0; transition: opacity 2s; }
+  #ending.show { opacity: 1; }
+  #ending .ring { font-size: 44px; }
+  #ending p { font-family: "Nanum Pen Script", cursive; font-size: 34px; margin-top: 18px; line-height: 1.4; }
+</style>
+</head>
+<body>
+
+<section id="menu" class="screen">
+  <div class="menu">
+    <div class="eyebrow">TONIGHT'S COURSE</div>
+    <h1>오늘의 코스</h1>
+    <div class="for">공발님을 위한 특별한 저녁</div>
+    <div class="divider"></div>
+
+    <!-- 실제 코스 이름으로 바꿔주세요 -->
+    <div class="course"><small>AMUSE-BOUCHE</small><p>셰프의 첫 인사</p></div>
+    <div class="course"><small>ENTRÉE</small><p>계절의 전채</p></div>
+    <div class="course"><small>PLAT</small><p>오늘의 메인 요리</p></div>
+    <div class="course"><small>DESSERT</small><p>달콤한 마무리</p></div>
+
+    <div class="last">
+      <small>LAST COURSE</small>
+      <p>🔒 오직 공발님을 위한 코스</p>
+      <span>메뉴판에는 없는, 오늘 단 한 번의 코스입니다</span>
+      <button class="open" id="openBtn">마지막 코스 열어보기</button>
+    </div>
+    <div class="note">🔊 소리를 켜고 열어주세요</div>
+  </div>
+</section>
+
+<section id="loading" class="screen hidden">
+  <div class="dots"><span></span><span></span><span></span></div>
+  <p>마지막 코스를 준비하고 있어요</p>
+</section>
+
+<section id="stage" class="hidden">
+  <!-- 완성된 영상 파일을 같은 폴더에 proposal.mp4 이름으로 넣어주세요 -->
+  <video id="video" src="proposal.mp4" playsinline preload="auto"></video>
+  <button id="tapToPlay" class="hidden">▶ 터치해서 보기</button>
+</section>
+
+<section id="ending" class="screen hidden">
+  <div class="ring">💍</div>
+  <p>공바르미,<br>나와 결혼해 줄래?</p>
+</section>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const video = $("video");
+
+  $("openBtn").addEventListener("click", () => {
+    // 버튼을 누른 순간 재생 권한을 얻어 두었다가, 로딩 연출 뒤에 소리와 함께 재생
+    video.play().then(() => video.pause()).catch(() => {});
+    $("menu").classList.add("hidden");
+    $("loading").classList.remove("hidden");
+
+    setTimeout(() => {
+      $("stage").classList.remove("hidden");
+      $("loading").style.opacity = 0;
+      setTimeout(() => $("loading").classList.add("hidden"), 800);
+      video.currentTime = 0;
+      video.play().catch(() => $("tapToPlay").classList.remove("hidden"));
+    }, 2200);
+  });
+
+  $("tapToPlay").addEventListener("click", () => {
+    $("tapToPlay").classList.add("hidden");
+    video.play();
+  });
+
+  video.addEventListener("ended", () => {
+    $("ending").classList.remove("hidden");
+    requestAnimationFrame(() => requestAnimationFrame(() => $("ending").classList.add("show")));
+  });
+</script>
+</body>
+</html>
