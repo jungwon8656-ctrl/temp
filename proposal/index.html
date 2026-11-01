@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>오늘의 코스</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Chez Simon · Menu du Dîner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Nanum+Myeongjo:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: #f7f1e6;
@@ -32,6 +33,10 @@
   .eyebrow { font-size: 12px; letter-spacing: .3em; color: var(--muted); }
   h1 { font-size: 28px; font-weight: 700; margin: 12px 0 6px; }
   .for { font-family: "Nanum Pen Script", cursive; font-size: 26px; color: var(--accent); }
+  .brand { font-family: "Cormorant Garamond", serif; font-size: 34px; font-weight: 500; letter-spacing: .08em; }
+  .fr { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 19px; color: var(--muted); }
+  .course .ko { font-size: 16px; font-weight: 700; }
+  .course .desc { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.6; }
   .divider { width: 48px; height: 1px; background: var(--line); margin: 28px auto; }
   .course { padding: 16px 0; border-bottom: 1px dashed var(--line); }
   .course:last-of-type { border-bottom: none; }
@@ -72,30 +77,36 @@
 
 <section id="menu" class="screen">
   <div class="menu">
-    <div class="eyebrow">TONIGHT'S COURSE</div>
-    <h1>오늘의 코스</h1>
-    <div class="for">공발님을 위한 특별한 저녁</div>
+    <div class="eyebrow">MENU DÉGUSTATION</div>
+    <h1 class="brand">Chez Simon</h1>
+    <div class="fr">Menu du Dîner</div>
     <div class="divider"></div>
 
-    <!-- 실제 코스 이름으로 바꿔주세요 -->
-    <div class="course"><small>AMUSE-BOUCHE</small><p>셰프의 첫 인사</p></div>
-    <div class="course"><small>ENTRÉE</small><p>계절의 전채</p></div>
-    <div class="course"><small>PLAT</small><p>오늘의 메인 요리</p></div>
-    <div class="course"><small>DESSERT</small><p>달콤한 마무리</p></div>
+    <!-- 당일 실제 코스에 맞춰 바꾸면 더 자연스러움 -->
+    <div class="course"><small>AMUSE-BOUCHE</small>
+      <p class="ko">셰프의 한 입</p><div class="desc">계절 재료로 만든 작은 타르트와 허브</div></div>
+    <div class="course"><small>ENTRÉE</small>
+      <p class="ko">제철 해산물 전채</p><div class="desc">산뜻한 비네그레트와 계절 채소</div></div>
+    <div class="course"><small>POISSON</small>
+      <p class="ko">오늘의 생선</p><div class="desc">브라운 버터 소스, 구운 채소</div></div>
+    <div class="course"><small>VIANDE</small>
+      <p class="ko">한우 안심</p><div class="desc">레드 와인 소스, 감자 퓌레</div></div>
+    <div class="course"><small>DESSERT</small>
+      <p class="ko">셰프의 계절 디저트</p><div class="desc">프랑스식 디저트와 커피 또는 차</div></div>
 
     <div class="last">
-      <small>LAST COURSE</small>
-      <p>🔒 오직 공발님을 위한 코스</p>
-      <span>메뉴판에는 없는, 오늘 단 한 번의 코스입니다</span>
-      <button class="open" id="openBtn">마지막 코스 열어보기</button>
+      <small>LE DERNIER PLAT</small>
+      <p>마지막 코스</p>
+      <span>오늘 이 테이블을 위해 준비한 마지막 코스입니다</span>
+      <button class="open" id="openBtn">마지막 코스 보기</button>
     </div>
-    <div class="note">🔊 소리를 켜고 열어주세요</div>
+    <div class="note">🔊 소리와 함께 감상해 주세요</div>
   </div>
 </section>
 
 <section id="loading" class="screen hidden">
   <div class="dots"><span></span><span></span><span></span></div>
-  <p>마지막 코스를 준비하고 있어요</p>
+  <p>마지막 코스를 준비하고 있습니다</p>
 </section>
 
 <section id="stage" class="hidden">
