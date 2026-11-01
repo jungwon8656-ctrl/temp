@@ -71,6 +71,37 @@
   #ending.show { opacity: 1; }
   #ending .ring { font-size: 44px; }
   #ending p { font-family: "Nanum Pen Script", cursive; font-size: 34px; margin-top: 18px; line-height: 1.4; }
+  .course[data-i] { cursor: pointer; position: relative; -webkit-tap-highlight-color: transparent; }
+  .course[data-i]::after { content: "자세히 보기 ›"; display: block; margin-top: 8px; font-size: 11px; letter-spacing: .05em; color: var(--accent); }
+  .course[data-i]:active { background: rgba(156,74,60,.05); }
+
+  /* 메뉴 상세 */
+  #sheetBg { position: fixed; inset: 0; background: rgba(30,20,15,.45); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 5; }
+  #sheet {
+    position: fixed; left: 0; right: 0; bottom: 0; max-height: 88dvh; overflow-y: auto; z-index: 6;
+    background: var(--paper); border-radius: 18px 18px 0 0; padding: 0 0 32px;
+    transform: translateY(100%); transition: transform .35s ease;
+  }
+  body.sheet-open #sheetBg { opacity: 1; pointer-events: auto; }
+  body.sheet-open #sheet { transform: none; }
+  .sheet-inner { max-width: 440px; margin: 0 auto; }
+  .grip { width: 40px; height: 4px; border-radius: 2px; background: var(--line); margin: 10px auto 0; }
+  .close { position: sticky; top: 0; display: flex; justify-content: flex-end; padding: 8px 12px 0; }
+  .close button { border: none; background: none; font-size: 26px; line-height: 1; color: var(--muted); padding: 4px 8px; cursor: pointer; }
+  .visual { margin: 4px 24px 0; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; background: #efe6d6; display: flex; align-items: center; justify-content: center; }
+  .visual img { width: 100%; height: 100%; object-fit: cover; }
+  .visual svg { width: 46%; height: auto; stroke: #b39c80; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sheet-head { text-align: center; padding: 22px 24px 6px; }
+  .sheet-head small { font-size: 11px; letter-spacing: .3em; color: var(--muted); }
+  .sheet-head h2 { font-size: 22px; margin: 8px 0 4px; }
+  .sheet-head .fr { font-size: 17px; }
+  .sheet-body { padding: 8px 28px 0; }
+  .sheet-body h3 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 13px; letter-spacing: .25em; color: var(--accent); margin: 22px 0 8px; }
+  .sheet-body p, .sheet-body li { font-size: 14px; line-height: 1.8; }
+  .sheet-body ul { list-style: none; }
+  .sheet-body li { padding-left: 14px; position: relative; }
+  .sheet-body li::before { content: "·"; position: absolute; left: 2px; color: var(--accent); }
+  .pairing { margin: 24px 28px 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px; color: var(--muted); line-height: 1.7; }
 </style>
 </head>
 <body>
@@ -83,15 +114,15 @@
     <div class="divider"></div>
 
     <!-- 당일 실제 코스에 맞춰 바꾸면 더 자연스러움 -->
-    <div class="course"><small>AMUSE-BOUCHE</small>
+    <div class="course" data-i="0" role="button" tabindex="0"><small>AMUSE-BOUCHE</small>
       <p class="ko">셰프의 한 입</p><div class="desc">계절 재료로 만든 작은 타르트와 허브</div></div>
-    <div class="course"><small>ENTRÉE</small>
+    <div class="course" data-i="1" role="button" tabindex="0"><small>ENTRÉE</small>
       <p class="ko">제철 해산물 전채</p><div class="desc">산뜻한 비네그레트와 계절 채소</div></div>
-    <div class="course"><small>POISSON</small>
+    <div class="course" data-i="2" role="button" tabindex="0"><small>POISSON</small>
       <p class="ko">오늘의 생선</p><div class="desc">브라운 버터 소스, 구운 채소</div></div>
-    <div class="course"><small>VIANDE</small>
+    <div class="course" data-i="3" role="button" tabindex="0"><small>VIANDE</small>
       <p class="ko">한우 안심</p><div class="desc">레드 와인 소스, 감자 퓌레</div></div>
-    <div class="course"><small>DESSERT</small>
+    <div class="course" data-i="4" role="button" tabindex="0"><small>DESSERT</small>
       <p class="ko">셰프의 계절 디저트</p><div class="desc">프랑스식 디저트와 커피 또는 차</div></div>
 
     <div class="last">
@@ -100,9 +131,29 @@
       <span>오늘 이 테이블을 위해 준비한 마지막 코스입니다</span>
       <button class="open" id="openBtn">마지막 코스 보기</button>
     </div>
-    <div class="note">🔊 소리와 함께 감상해 주세요</div>
+    <div class="note">메뉴를 누르면 자세한 설명을 볼 수 있습니다<br>🔊 마지막 코스는 소리와 함께 감상해 주세요</div>
   </div>
 </section>
+
+<div id="sheetBg"></div>
+<div id="sheet" aria-hidden="true">
+  <div class="sheet-inner">
+    <div class="grip"></div>
+    <div class="close"><button id="closeSheet" aria-label="닫기">×</button></div>
+    <div class="visual" id="sVisual"></div>
+    <div class="sheet-head">
+      <small id="sTag"></small>
+      <h2 id="sName"></h2>
+      <div class="fr" id="sFr"></div>
+    </div>
+    <div class="sheet-body">
+      <h3>INGRÉDIENTS</h3><ul id="sIng"></ul>
+      <h3>PRÉPARATION</h3><p id="sPrep"></p>
+      <h3>DÉGUSTATION</h3><p id="sTaste"></p>
+    </div>
+    <div class="pairing" id="sPair"></div>
+  </div>
+</div>
 
 <section id="loading" class="screen hidden">
   <div class="dots"><span></span><span></span><span></span></div>
@@ -121,6 +172,68 @@
 </section>
 
 <script>
+  // 코스 상세: 실제 요리 사진이 있으면 img에 파일 이름을 넣으면 됨 (예: "amuse.jpg")
+  const ICONS = {
+    tart: '<svg viewBox="0 0 100 70"><ellipse cx="50" cy="44" rx="34" ry="10"/><path d="M16 44c2 8 66 8 68 0"/><path d="M36 38c4-10 10-16 14-24M50 38c0-10 4-18 10-24M62 38c-2-8 2-14 8-18"/></svg>',
+    shell: '<svg viewBox="0 0 100 70"><path d="M20 50c0-22 14-36 30-36s30 14 30 36z"/><path d="M50 14v36M36 18l8 32M64 18l-8 32M26 30l14 20M74 30L60 50"/><path d="M14 54h72"/></svg>',
+    fish: '<svg viewBox="0 0 100 70"><path d="M14 36c14-16 40-18 58 0-18 18-44 16-58 0z"/><path d="M72 36l14-12v24z"/><circle cx="28" cy="33" r="1.6"/><path d="M42 26c4 6 4 14 0 20"/></svg>',
+    meat: '<svg viewBox="0 0 100 70"><ellipse cx="50" cy="48" rx="38" ry="9"/><path d="M30 44c0-12 10-18 20-18s20 6 20 18"/><path d="M38 34c6-2 18-2 24 0M36 40c8-2 20-2 28 0"/></svg>',
+    dessert: '<svg viewBox="0 0 100 70"><path d="M24 50h52"/><path d="M30 50c0-14 8-24 20-24s20 10 20 24"/><path d="M50 26v-8"/><circle cx="50" cy="15" r="3"/><path d="M38 40c4 2 8 2 12 0s8-2 12 0"/></svg>',
+  };
+  const COURSES = [
+    { tag: "AMUSE-BOUCHE", name: "셰프의 한 입", fr: "Tartelette aux herbes", icon: "tart", img: "",
+      ing: ["버터 향 가득한 바삭한 타르트 셸", "제철 허브와 신선한 참치", "레몬 제스트, 올리브 오일"],
+      prep: "버터를 듬뿍 넣은 반죽을 얇게 밀어 한 입 크기로 구워냅니다. 차갑게 손질한 참치와 곱게 다진 허브를 올리고, 마지막에 레몬 제스트를 살짝 뿌려 향을 살립니다.",
+      taste: "한 입에 넣어 보세요. 바삭한 타르트가 부서지는 소리 뒤로 허브 향이 먼저 퍼지고, 참치의 부드러움이 천천히 따라옵니다. 오늘 저녁의 첫인사입니다.",
+      pair: "식욕을 깨우는 상큼한 스파클링 와인과 잘 어울립니다." },
+    { tag: "ENTRÉE", name: "제철 해산물 전채", fr: "Fruits de mer, vinaigrette", icon: "shell", img: "",
+      ing: ["달큼한 홍새우와 제철 해산물", "화이트 아스파라거스, 계절 채소", "셰리 비네거와 머스터드로 만든 비네그레트"],
+      prep: "해산물은 단맛이 살아 있도록 짧게 익히고, 채소는 아삭함을 남겨 데쳐 냅니다. 새콤한 비네그레트를 마지막에 둘러 재료 각각의 맛이 또렷하게 느껴지도록 했습니다.",
+      taste: "먼저 해산물만 따로 맛본 뒤, 채소와 소스를 함께 올려 드셔 보세요. 같은 재료가 소스 하나로 얼마나 달라지는지 느끼실 수 있습니다.",
+      pair: "미네랄감 있는 화이트 와인이 해산물의 단맛을 끌어올립니다." },
+    { tag: "POISSON", name: "오늘의 생선", fr: "Poisson du jour, beurre noisette", icon: "fish", img: "",
+      ing: ["그날 가장 좋은 상태의 흰살 생선", "고소한 브라운 버터(뵈르 누아제트)", "구운 계절 채소, 케이퍼, 허브"],
+      prep: "껍질 쪽부터 팬에 천천히 구워 껍질은 바삭하게, 속살은 촉촉하게 익힙니다. 버터를 갈색이 될 때까지 끓여 헤이즐넛 같은 고소한 향을 낸 소스를 곁들입니다.",
+      taste: "껍질의 바삭함과 속살의 부드러움을 한 번에 느껴 보세요. 소스는 생선 위보다 접시 가장자리에서 조금씩 찍어 드시면 고소한 향이 더 오래 남습니다.",
+      pair: "버터 향과 잘 맞는 부드러운 질감의 화이트 와인을 추천드립니다." },
+    { tag: "VIANDE", name: "한우 안심", fr: "Filet de bœuf, sauce au vin rouge", icon: "meat", img: "",
+      ing: ["결이 고운 한우 안심", "레드 와인과 육수를 오래 졸인 소스", "버터를 넣어 곱게 내린 감자 퓌레"],
+      prep: "고기는 겉면을 강하게 구워 육즙을 가둔 뒤, 충분히 쉬게 해 속까지 고르게 익힙니다. 레드 와인 소스는 여러 시간 졸여 깊은 맛을 냈고, 감자 퓌레는 체에 여러 번 내려 부드럽게 만들었습니다.",
+      taste: "첫 점은 소스 없이 고기 본연의 맛으로, 다음 점은 소스와 퓌레를 함께 드셔 보세요. 오늘 코스의 가장 깊은 맛을 담은 접시입니다.",
+      pair: "탄닌이 부드러운 레드 와인이 소스의 풍미를 길게 이어 줍니다." },
+    { tag: "DESSERT", name: "셰프의 계절 디저트", fr: "Dessert de saison", icon: "dessert", img: "",
+      ing: ["제철 과일", "바닐라 빈을 넣은 크림", "바삭한 버터 사블레"],
+      prep: "과일은 가장 맛있는 상태 그대로 살리고, 크림은 달지 않게 만들어 과일의 향을 받쳐 줍니다. 사블레를 곁들여 부드러움과 바삭함이 함께 느껴지도록 했습니다.",
+      taste: "천천히 드셔 보세요. 저녁의 마무리이자, 아직 남아 있는 마지막 코스를 위한 준비입니다.",
+      pair: "커피 또는 차와 함께 즐기시길 권해 드립니다." },
+  ];
+
+  const sheet = document.getElementById("sheet");
+  function openCourse(i) {
+    const c = COURSES[i];
+    document.getElementById("sVisual").innerHTML = c.img ? `<img src="${c.img}" alt="${c.name}">` : ICONS[c.icon];
+    document.getElementById("sTag").textContent = c.tag;
+    document.getElementById("sName").textContent = c.name;
+    document.getElementById("sFr").textContent = c.fr;
+    document.getElementById("sIng").innerHTML = c.ing.map(x => `<li>${x}</li>`).join("");
+    document.getElementById("sPrep").textContent = c.prep;
+    document.getElementById("sTaste").textContent = c.taste;
+    document.getElementById("sPair").textContent = "🍷 " + c.pair;
+    sheet.scrollTop = 0;
+    sheet.setAttribute("aria-hidden", "false");
+    document.body.classList.add("sheet-open");
+  }
+  function closeCourse() {
+    sheet.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("sheet-open");
+  }
+  document.querySelectorAll(".course[data-i]").forEach(el => {
+    el.addEventListener("click", () => openCourse(+el.dataset.i));
+    el.addEventListener("keydown", e => { if (e.key === "Enter") openCourse(+el.dataset.i); });
+  });
+  document.getElementById("closeSheet").addEventListener("click", closeCourse);
+  document.getElementById("sheetBg").addEventListener("click", closeCourse);
+
   const $ = (id) => document.getElementById(id);
   const video = $("video");
 
