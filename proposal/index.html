@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Chez Simon · Menu du Dîner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: #ffffff;
@@ -101,28 +101,73 @@
   .sheet-body li { padding-left: 14px; position: relative; }
   .sheet-body li::before { content: "·"; position: absolute; left: 2px; color: var(--accent); }
   .pairing { margin: 24px 28px 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* 쉐시몽 메뉴판 스타일 */
+  .menu .arc { width: 64px; display: block; margin: 0 auto -2px; fill: none; stroke: var(--ink); stroke-width: 1.2; }
+  .brand { font-family: "Cinzel", serif; font-size: 34px; font-weight: 500; letter-spacing: .04em; line-height: 1.05; margin: 0; }
+  .diner { font-family: "Cinzel", serif; font-size: 26px; letter-spacing: .32em; margin: 18px 0 0 .32em; }
+  .hint { font-size: 11px; color: var(--muted); margin-top: 18px; }
+  .group { padding: 10px 0; }
+  .item, .choice { padding: 12px 0; }
+  .item small, .choice small { display: block; font-family: "Cinzel", serif; font-size: 10px; letter-spacing: .38em; color: var(--muted); margin-bottom: 7px; }
+  .item p { font-family: "Noto Sans KR", sans-serif; font-size: 16px; font-weight: 700; color: var(--ink); }
+  .item p i { font-style: normal; font-weight: 400; color: #b5b5b5; margin-left: 6px; }
+  .item { cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: 2px; }
+  .item:active { background: rgba(0,0,0,.04); }
+  .opts { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .opt { padding: 6px 10px; }
+  .ou { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--muted); font-size: 15px; }
+  .selon { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .rule { border: none; height: 1px; background: #b08a6e; opacity: .7; margin: 6px -8px; }
+  .origin { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .origin small { font-family: "Cinzel", serif; font-size: 10px; letter-spacing: .38em; color: var(--muted); }
+  .origin ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 18px; margin-top: 12px; text-align: left; }
+  .origin li { display: flex; justify-content: space-between; font-family: "Noto Sans KR", sans-serif; font-size: 11px; color: var(--muted); border-bottom: 1px dotted #e6e6e6; padding: 3px 0; }
+  .sheet-head small { font-family: "Cinzel", serif; }
+  .sheet-head h2 { font-family: "Noto Sans KR", sans-serif; font-weight: 700; }
+  .sheet-body h3 { font-family: "Cinzel", serif; }
+  .origin-line { font-size: 12px; color: var(--muted); text-align: center; margin-top: 6px; }
 </style>
 </head>
 <body>
 
 <section id="menu" class="screen">
   <div class="menu">
-    <div class="eyebrow">MENU DÉGUSTATION</div>
-    <h1 class="brand">Chez Simon</h1>
-    <div class="fr">Menu du Dîner</div>
-    <div class="divider"></div>
+    <svg class="arc" viewBox="0 0 120 14"><path d="M4 12 Q60 -6 116 12"/></svg>
+    <h1 class="brand">CHEZ<br>SIMON</h1>
+    <div class="diner">DINER</div>
+    <div class="hint">메뉴를 누르면 자세한 설명을 볼 수 있습니다</div>
 
-    <!-- 당일 실제 코스에 맞춰 바꾸면 더 자연스러움 -->
-    <div class="course" data-i="0" role="button" tabindex="0"><small>AMUSE-BOUCHE</small>
-      <p class="ko">셰프의 한 입</p><div class="desc">계절 재료로 만든 작은 타르트와 허브</div></div>
-    <div class="course" data-i="1" role="button" tabindex="0"><small>ENTRÉE</small>
-      <p class="ko">제철 해산물 전채</p><div class="desc">산뜻한 비네그레트와 계절 채소</div></div>
-    <div class="course" data-i="2" role="button" tabindex="0"><small>POISSON</small>
-      <p class="ko">오늘의 생선</p><div class="desc">브라운 버터 소스, 구운 채소</div></div>
-    <div class="course" data-i="3" role="button" tabindex="0"><small>VIANDE</small>
-      <p class="ko">한우 안심</p><div class="desc">레드 와인 소스, 감자 퓌레</div></div>
-    <div class="course" data-i="4" role="button" tabindex="0"><small>DESSERT</small>
-      <p class="ko">셰프의 계절 디저트</p><div class="desc">프랑스식 디저트와 커피 또는 차</div></div>
+    <div class="group">
+      <div class="item" data-k="scallop" role="button" tabindex="0"><small>AMUSE BOUCHE 1</small><p>허브, 관자<i>›</i></p></div>
+      <div class="item" data-k="morel" role="button" tabindex="0"><small>AMUSE BOUCHE 2</small><p>모렐<i>›</i></p></div>
+      <div class="item" data-k="pumpkin" role="button" tabindex="0"><small>AMUSE BOUCHE 3</small><p>호박<i>›</i></p></div>
+    </div>
+    <hr class="rule">
+    <div class="group">
+      <div class="choice"><small>ENTREE 1</small>
+        <div class="opts">
+          <div class="item opt" data-k="lobster" role="button" tabindex="0"><p>랍스터, 바나나<i>›</i></p></div>
+          <span class="ou">ou</span>
+          <div class="item opt" data-k="iberico" role="button" tabindex="0"><p>이베리코<i>›</i></p></div>
+        </div>
+        <div class="selon">그날의 재료에 따라 둘 중 한 가지가 준비됩니다</div>
+      </div>
+      <div class="item" data-k="seafood" role="button" tabindex="0"><small>ENTREE 2</small><p>오늘의 해산물<i>›</i></p></div>
+      <div class="item" data-k="beef" role="button" tabindex="0"><small>PLAT PRINCIPAL</small><p>한우안심스테이크<i>›</i></p></div>
+    </div>
+    <hr class="rule">
+    <div class="group">
+      <div class="choice"><small>DESSERT</small>
+        <div class="opts">
+          <div class="item opt" data-k="mango" role="button" tabindex="0"><p>망고 소르베<i>›</i></p></div>
+          <span class="ou">ou</span>
+          <div class="item opt" data-k="noisette" role="button" tabindex="0"><p>뵈흐 누아제트<i>›</i></p></div>
+        </div>
+        <div class="selon">그날의 재료에 따라 둘 중 한 가지가 준비됩니다</div>
+      </div>
+    </div>
+    <hr class="rule">
 
     <div class="last">
       <small>LE DERNIER PLAT</small>
@@ -130,7 +175,11 @@
       <span>오늘 이 테이블을 위해 준비한 마지막 코스입니다</span>
       <button class="open" id="openBtn">마지막 코스 보기</button>
     </div>
-    <div class="note">메뉴를 누르면 자세한 설명을 볼 수 있습니다<br>🔊 마지막 코스는 소리와 함께 감상해 주세요</div>
+    <div class="note">🔊 마지막 코스는 소리와 함께 감상해 주세요</div>
+    <div class="origin">
+      <small>ORIGINE</small>
+      <ul><li><span>안심</span><span>국내산 육우</span></li><li><span>그린빈스</span><span>국내산</span></li><li><span>참치</span><span>원양산</span></li><li><span>프로마쥬 블랑</span><span>프랑스</span></li><li><span>단새우</span><span>국내산</span></li><li><span>기타 채소</span><span>국내산</span></li><li><span>치즈</span><span>이탈리아</span></li><li><span>버터</span><span>뉴질랜드</span></li><li><span>파스닙</span><span>벨기에</span></li><li><span>기타 유제품</span><span>국내산</span></li><li><span>대구</span><span>국내산</span></li><li><span>대게</span><span>러시아</span></li><li><span>가지</span><span>국내산</span></li><li><span>베르가못</span><span>이탈리아</span></li><li><span>단호박</span><span>국내산</span></li><li><span>아몬드</span><span>미국산</span></li></ul>
+    </div>
   </div>
 </section>
 
@@ -144,11 +193,13 @@
       <small id="sTag"></small>
       <h2 id="sName"></h2>
       <div class="fr" id="sFr"></div>
+      <div class="origin-line" id="sOrigin"></div>
     </div>
     <div class="sheet-body">
       <h3>INGRÉDIENTS</h3><ul id="sIng"></ul>
       <h3>PRÉPARATION</h3><p id="sPrep"></p>
       <h3>DÉGUSTATION</h3><p id="sTaste"></p>
+      <h3>LE SAVIEZ-VOUS</h3>
     </div>
     <div class="pairing" id="sPair"></div>
   </div>
@@ -171,45 +222,140 @@
 </section>
 
 <script>
-  // 코스 상세: 실제 요리 사진이 있으면 img에 파일 이름을 넣으면 됨 (예: "amuse.jpg")
-  const ICONS = {
-    tart: '<svg viewBox="0 0 100 70"><ellipse cx="50" cy="44" rx="34" ry="10"/><path d="M16 44c2 8 66 8 68 0"/><path d="M36 38c4-10 10-16 14-24M50 38c0-10 4-18 10-24M62 38c-2-8 2-14 8-18"/></svg>',
-    shell: '<svg viewBox="0 0 100 70"><path d="M20 50c0-22 14-36 30-36s30 14 30 36z"/><path d="M50 14v36M36 18l8 32M64 18l-8 32M26 30l14 20M74 30L60 50"/><path d="M14 54h72"/></svg>',
-    fish: '<svg viewBox="0 0 100 70"><path d="M14 36c14-16 40-18 58 0-18 18-44 16-58 0z"/><path d="M72 36l14-12v24z"/><circle cx="28" cy="33" r="1.6"/><path d="M42 26c4 6 4 14 0 20"/></svg>',
-    meat: '<svg viewBox="0 0 100 70"><ellipse cx="50" cy="48" rx="38" ry="9"/><path d="M30 44c0-12 10-18 20-18s20 6 20 18"/><path d="M38 34c6-2 18-2 24 0M36 40c8-2 20-2 28 0"/></svg>',
-    dessert: '<svg viewBox="0 0 100 70"><path d="M24 50h52"/><path d="M30 50c0-14 8-24 20-24s20 10 20 24"/><path d="M50 26v-8"/><circle cx="50" cy="15" r="3"/><path d="M38 40c4 2 8 2 12 0s8-2 12 0"/></svg>',
-  };
-  const COURSES = [
-    { tag: "AMUSE-BOUCHE", name: "셰프의 한 입", fr: "Tartelette aux herbes", icon: "tart", img: "",
-      ing: ["버터 향 가득한 바삭한 타르트 셸", "제철 허브와 신선한 참치", "레몬 제스트, 올리브 오일"],
-      prep: "버터를 듬뿍 넣은 반죽을 얇게 밀어 한 입 크기로 구워냅니다. 차갑게 손질한 참치와 곱게 다진 허브를 올리고, 마지막에 레몬 제스트를 살짝 뿌려 향을 살립니다.",
-      taste: "한 입에 넣어 보세요. 바삭한 타르트가 부서지는 소리 뒤로 허브 향이 먼저 퍼지고, 참치의 부드러움이 천천히 따라옵니다. 오늘 저녁의 첫인사입니다.",
-      pair: "식욕을 깨우는 상큼한 스파클링 와인과 잘 어울립니다." },
-    { tag: "ENTRÉE", name: "제철 해산물 전채", fr: "Fruits de mer, vinaigrette", icon: "shell", img: "",
-      ing: ["달큼한 홍새우와 제철 해산물", "화이트 아스파라거스, 계절 채소", "셰리 비네거와 머스터드로 만든 비네그레트"],
-      prep: "해산물은 단맛이 살아 있도록 짧게 익히고, 채소는 아삭함을 남겨 데쳐 냅니다. 새콤한 비네그레트를 마지막에 둘러 재료 각각의 맛이 또렷하게 느껴지도록 했습니다.",
-      taste: "먼저 해산물만 따로 맛본 뒤, 채소와 소스를 함께 올려 드셔 보세요. 같은 재료가 소스 하나로 얼마나 달라지는지 느끼실 수 있습니다.",
-      pair: "미네랄감 있는 화이트 와인이 해산물의 단맛을 끌어올립니다." },
-    { tag: "POISSON", name: "오늘의 생선", fr: "Poisson du jour, beurre noisette", icon: "fish", img: "",
-      ing: ["그날 가장 좋은 상태의 흰살 생선", "고소한 브라운 버터(뵈르 누아제트)", "구운 계절 채소, 케이퍼, 허브"],
-      prep: "껍질 쪽부터 팬에 천천히 구워 껍질은 바삭하게, 속살은 촉촉하게 익힙니다. 버터를 갈색이 될 때까지 끓여 헤이즐넛 같은 고소한 향을 낸 소스를 곁들입니다.",
-      taste: "껍질의 바삭함과 속살의 부드러움을 한 번에 느껴 보세요. 소스는 생선 위보다 접시 가장자리에서 조금씩 찍어 드시면 고소한 향이 더 오래 남습니다.",
-      pair: "버터 향과 잘 맞는 부드러운 질감의 화이트 와인을 추천드립니다." },
-    { tag: "VIANDE", name: "한우 안심", fr: "Filet de bœuf, sauce au vin rouge", icon: "meat", img: "",
-      ing: ["결이 고운 한우 안심", "레드 와인과 육수를 오래 졸인 소스", "버터를 넣어 곱게 내린 감자 퓌레"],
-      prep: "고기는 겉면을 강하게 구워 육즙을 가둔 뒤, 충분히 쉬게 해 속까지 고르게 익힙니다. 레드 와인 소스는 여러 시간 졸여 깊은 맛을 냈고, 감자 퓌레는 체에 여러 번 내려 부드럽게 만들었습니다.",
-      taste: "첫 점은 소스 없이 고기 본연의 맛으로, 다음 점은 소스와 퓌레를 함께 드셔 보세요. 오늘 코스의 가장 깊은 맛을 담은 접시입니다.",
-      pair: "탄닌이 부드러운 레드 와인이 소스의 풍미를 길게 이어 줍니다." },
-    { tag: "DESSERT", name: "셰프의 계절 디저트", fr: "Dessert de saison", icon: "dessert", img: "",
-      ing: ["제철 과일", "바닐라 빈을 넣은 크림", "바삭한 버터 사블레"],
-      prep: "과일은 가장 맛있는 상태 그대로 살리고, 크림은 달지 않게 만들어 과일의 향을 받쳐 줍니다. 사블레를 곁들여 부드러움과 바삭함이 함께 느껴지도록 했습니다.",
-      taste: "천천히 드셔 보세요. 저녁의 마무리이자, 아직 남아 있는 마지막 코스를 위한 준비입니다.",
-      pair: "커피 또는 차와 함께 즐기시길 권해 드립니다." },
-  ];
+  // 메뉴 상세: 사진이 있으면 img에 파일 이름을 넣으면 됨 (예: "morel.jpg")
+  const ICONS = {"shell": "<svg viewBox=\"0 0 100 70\"><path d=\"M20 50c0-22 14-36 30-36s30 14 30 36z\"/><path d=\"M50 14v36M36 18l8 32M64 18l-8 32M26 30l14 20M74 30L60 50\"/><path d=\"M14 54h72\"/></svg>", "mushroom": "<svg viewBox=\"0 0 100 70\"><path d=\"M50 8c-12 0-18 12-18 24 0 4 8 6 18 6s18-2 18-6c0-12-6-24-18-24z\"/><path d=\"M40 18l4 6M58 16l-3 7M46 28l4 3M56 28l-2 4M42 32l3 1\"/><path d=\"M44 38c0 10-2 18-4 24h20c-2-6-4-14-4-24\"/></svg>", "pumpkin": "<svg viewBox=\"0 0 100 70\"><path d=\"M50 18c-20 0-30 10-30 24s12 22 30 22 30-8 30-22-10-24-30-24z\"/><path d=\"M50 18c-8 6-10 16-10 24s2 16 10 22M50 18c8 6 10 16 10 24s-2 16-10 22\"/><path d=\"M50 18c0-6 2-10 6-12\"/></svg>", "lobster": "<svg viewBox=\"0 0 100 70\"><path d=\"M50 22c-6 0-9 6-9 14s3 20 9 26c6-6 9-18 9-26s-3-14-9-14z\"/><path d=\"M42 30c-10-2-16-8-18-16 6 0 10 4 12 8M58 30c10-2 16-8 18-16-6 0-10 4-12 8\"/><path d=\"M41 40h18M42 48h16\"/><path d=\"M46 22c-4-8-10-12-16-14M54 22c4-8 10-12 16-14\"/></svg>", "meat": "<svg viewBox=\"0 0 100 70\"><ellipse cx=\"50\" cy=\"48\" rx=\"38\" ry=\"9\"/><path d=\"M30 44c0-12 10-18 20-18s20 6 20 18\"/><path d=\"M38 34c6-2 18-2 24 0M36 40c8-2 20-2 28 0\"/></svg>", "fish": "<svg viewBox=\"0 0 100 70\"><path d=\"M14 36c14-16 40-18 58 0-18 18-44 16-58 0z\"/><path d=\"M72 36l14-12v24z\"/><circle cx=\"28\" cy=\"33\" r=\"1.6\"/><path d=\"M42 26c4 6 4 14 0 20\"/></svg>", "sorbet": "<svg viewBox=\"0 0 100 70\"><path d=\"M30 40h40l-6 22H36z\"/><path d=\"M34 40c0-10 6-16 16-16s16 6 16 16\"/><path d=\"M42 24c2-6 8-8 12-6\"/></svg>", "dessert": "<svg viewBox=\"0 0 100 70\"><path d=\"M24 50h52\"/><path d=\"M30 50c0-14 8-24 20-24s20 10 20 24\"/><path d=\"M50 26v-8\"/><circle cx=\"50\" cy=\"15\" r=\"3\"/><path d=\"M38 40c4 2 8 2 12 0s8-2 12 0\"/></svg>"};
+  const COURSES = {
+ "scallop": {
+  "tag": "AMUSE BOUCHE 1",
+  "name": "허브, 관자",
+  "fr": "Saint-Jacques aux herbes",
+  "icon": "shell",
+  "origin": "",
+  "ing": [
+   "관자: 가리비의 동그란 살 부분으로, 은은한 단맛과 부드러운 탄력이 특징이에요",
+   "허브: 딜, 처빌, 차이브처럼 향이 가벼운 허브가 프렌치에서 자주 쓰여요"
+  ],
+  "prep": "프렌치 요리에서 관자는 겉면만 짧게 구워 속을 촉촉하게 남기거나, 아주 얇게 저며 거의 날것에 가깝게 내는 경우가 많아요. 허브는 관자의 단맛을 가리지 않도록 가볍게 곁들입니다.",
+  "taste": "관자의 단맛을 먼저 느끼고, 허브 향이 뒤따라오는 순서에 집중해 보세요. 코스의 첫 접시라 입맛을 깨우는 역할을 합니다.",
+  "note": "프랑스어로 관자를 '생자크(Saint-Jacques)'라고 불러요. 산티아고 순례길의 상징이 가리비 껍데기인 데서 온 이름이에요."
+ },
+ "morel": {
+  "tag": "AMUSE BOUCHE 2",
+  "name": "모렐",
+  "fr": "Morille",
+  "icon": "mushroom",
+  "origin": "",
+  "ing": [
+   "모렐: 벌집처럼 구멍이 숭숭 난 갓을 가진 야생 버섯으로, 인공 재배가 어려워 귀한 재료로 꼽혀요",
+   "프렌치에서는 버터나 크림과 함께 조리하는 경우가 많아요"
+  ],
+  "prep": "모렐은 날것으로 먹지 않고 반드시 익혀서 내요. 구멍 사이에 소스가 스며들도록 버터나 크림에 천천히 익히는 방식이 대표적입니다.",
+  "taste": "한 입 베어 물면 구멍마다 머금은 소스가 터져 나와요. 흙내음과 견과류 같은 고소함이 함께 느껴지는지 음미해 보세요.",
+  "note": "모렐은 프랑스 셰프들이 특히 아끼는 버섯이라, 고급 프렌치 코스에서 자주 만날 수 있어요."
+ },
+ "pumpkin": {
+  "tag": "AMUSE BOUCHE 3",
+  "name": "호박",
+  "fr": "Potiron",
+  "icon": "pumpkin",
+  "origin": "단호박 (국내산)",
+  "ing": [
+   "단호박: 가을에 단맛이 가장 깊어지는 제철 재료예요",
+   "원산지 정보에 국내산 단호박이 올라 있어요"
+  ],
+  "prep": "프렌치에서 호박은 곱게 갈아 부드러운 수프(벨루테)나 퓌레로 내는 경우가 많아요. 버터나 크림을 더해 질감을 매끄럽게 만듭니다.",
+  "taste": "호박 자체의 자연스러운 단맛과 부드러운 질감을 천천히 느껴 보세요. 따뜻한 온도에서 향이 가장 잘 올라와요.",
+  "note": "11월은 단호박이 가장 맛있는 시기 중 하나예요. 계절이 그대로 담긴 한 입입니다."
+ },
+ "lobster": {
+  "tag": "ENTREE 1",
+  "name": "랍스터, 바나나",
+  "fr": "Homard et banane",
+  "icon": "lobster",
+  "origin": "",
+  "ing": [
+   "랍스터: 탱글한 살과 바다의 단맛이 특징인 갑각류예요",
+   "바나나: 익히면 단맛과 향이 진해지는 열대 과일이에요"
+  ],
+  "prep": "랍스터는 살이 질겨지지 않도록 짧게 익히는 것이 핵심이에요. 바나나는 굽거나 캐러멜화해 단맛을 끌어올리는 방식이 흔히 쓰여요.",
+  "taste": "낯선 조합이라 각각 따로 맛본 뒤 함께 먹어 보세요. 랍스터의 바다 향과 바나나의 달콤함이 어떻게 이어지는지가 이 접시의 재미예요.",
+  "note": "해산물과 과일의 조합은 프렌치 셰프들이 즐겨 시도하는 방식이에요. 단맛끼리 만나 서로를 더 돋보이게 합니다."
+ },
+ "iberico": {
+  "tag": "ENTREE 1",
+  "name": "이베리코",
+  "fr": "Porc ibérique",
+  "icon": "meat",
+  "origin": "",
+  "ing": [
+   "이베리코: 스페인 이베리아반도의 흑돼지 품종이에요",
+   "지방이 고기 속에 고르게 퍼져 있어 고소하고 부드러워요"
+  ],
+  "prep": "이베리코는 지방의 고소함을 살리기 위해 겉은 바삭하게, 속은 촉촉하게 구워 내는 경우가 많아요.",
+  "taste": "지방이 입안에서 녹으면서 나오는 고소한 향에 집중해 보세요. 견과류 같은 풍미가 느껴진다면 좋은 이베리코라는 뜻이에요.",
+  "note": "최상급 이베리코는 방목하며 도토리를 먹여 키워요. 그래서 고기에서 은은한 견과류 향이 납니다."
+ },
+ "seafood": {
+  "tag": "ENTREE 2",
+  "name": "오늘의 해산물",
+  "fr": "Fruits de mer du jour",
+  "icon": "fish",
+  "origin": "",
+  "ing": [
+   "그날 가장 좋은 상태로 들어온 해산물로 준비하는 접시예요",
+   "원산지 정보에 대구, 대게, 단새우 등이 올라 있어요"
+  ],
+  "prep": "재료가 매일 달라지는 만큼, 그날 해산물의 장점을 가장 잘 살리는 방식으로 조리돼요.",
+  "taste": "오늘은 어떤 해산물인지 서버에게 한번 물어보세요. 셰프가 그날 고른 재료라 코스 중에서도 가장 '오늘'다운 접시예요.",
+  "note": "'오늘의 ○○'는 셰프가 시장에서 직접 좋은 재료를 고른다는 뜻이에요. 같은 코스라도 방문할 때마다 달라지는 즐거움이 있어요."
+ },
+ "beef": {
+  "tag": "PLAT PRINCIPAL",
+  "name": "한우안심스테이크",
+  "fr": "Filet de bœuf",
+  "icon": "meat",
+  "origin": "",
+  "ing": [
+   "안심: 소의 허리 안쪽에 있는 부위로, 운동량이 적어 가장 부드러운 부위로 꼽혀요",
+   "지방이 적고 결이 고와 담백한 맛이 특징이에요"
+  ],
+  "prep": "안심은 겉면을 강한 불에 구워 향을 낸 뒤, 잠시 쉬게 해 육즙이 고르게 퍼지도록 하는 것이 일반적이에요.",
+  "taste": "첫 점은 소스 없이 고기 본연의 맛으로, 다음 점은 곁들임과 함께 드셔 보세요. 코스의 메인답게 가장 깊은 맛을 담은 접시예요.",
+  "note": "프랑스어로 안심 스테이크를 '필레 드 뵈프(Filet de bœuf)'라고 해요. 두툼하게 자른 가운데 부분은 '샤토브리앙'이라는 이름으로도 유명해요."
+ },
+ "mango": {
+  "tag": "DESSERT",
+  "name": "망고 소르베",
+  "fr": "Sorbet à la mangue",
+  "icon": "sorbet",
+  "origin": "",
+  "ing": [
+   "망고: 진한 단맛과 향을 가진 열대 과일이에요",
+   "소르베는 우유나 크림 없이 과일과 설탕으로 만든 얼음 디저트예요"
+  ],
+  "prep": "과일 퓌레를 저으면서 얼려 곱고 가벼운 질감을 만들어요. 우유가 들어가지 않아 과일 맛이 그대로 살아 있어요.",
+  "taste": "입안을 산뜻하게 정리해 주는 디저트예요. 천천히 녹여 먹으며 망고 향이 퍼지는 걸 느껴 보세요. 저녁의 마무리이자, 아직 남아 있는 마지막 코스를 위한 준비입니다.",
+  "note": "소르베는 프렌치 코스에서 무거운 요리 뒤에 입맛을 깔끔하게 정리하는 역할로 자주 등장해요."
+ },
+ "noisette": {
+  "tag": "DESSERT",
+  "name": "뵈흐 누아제트",
+  "fr": "Beurre noisette",
+  "icon": "dessert",
+  "origin": "버터 (뉴질랜드)",
+  "ing": [
+   "뵈흐 누아제트: 버터를 갈색이 될 때까지 끓여 헤이즐넛 같은 향을 낸 '갈색 버터'예요",
+   "원산지 정보에 뉴질랜드산 버터가 올라 있어요"
+  ],
+  "prep": "버터를 약한 불에 천천히 끓이면 우유 성분이 갈색으로 변하면서 고소한 향이 생겨요. 이 향을 살려 디저트로 만듭니다.",
+  "taste": "첫 향을 맡아 보세요. 버터인데도 구운 견과류 같은 고소함이 느껴질 거예요. 저녁의 마무리이자, 아직 남아 있는 마지막 코스를 위한 준비입니다.",
+  "note": "'누아제트(noisette)'는 프랑스어로 헤이즐넛이라는 뜻이에요. 버터 색과 향이 헤이즐넛을 닮아 붙은 이름이에요."
+ }
+};
 
   const sheet = document.getElementById("sheet");
-  function openCourse(i) {
-    const c = COURSES[i];
+  function openCourse(k) {
+    const c = COURSES[k];
     document.getElementById("sVisual").innerHTML = c.img ? `<img src="${c.img}" alt="${c.name}">` : ICONS[c.icon];
     document.getElementById("sTag").textContent = c.tag;
     document.getElementById("sName").textContent = c.name;
@@ -217,7 +363,8 @@
     document.getElementById("sIng").innerHTML = c.ing.map(x => `<li>${x}</li>`).join("");
     document.getElementById("sPrep").textContent = c.prep;
     document.getElementById("sTaste").textContent = c.taste;
-    document.getElementById("sPair").textContent = "🍷 " + c.pair;
+    document.getElementById("sPair").textContent = c.note;
+    document.getElementById("sOrigin").textContent = c.origin ? "원산지 · " + c.origin : "";
     sheet.scrollTop = 0;
     sheet.setAttribute("aria-hidden", "false");
     document.body.classList.add("sheet-open");
@@ -226,9 +373,9 @@
     sheet.setAttribute("aria-hidden", "true");
     document.body.classList.remove("sheet-open");
   }
-  document.querySelectorAll(".course[data-i]").forEach(el => {
-    el.addEventListener("click", () => openCourse(+el.dataset.i));
-    el.addEventListener("keydown", e => { if (e.key === "Enter") openCourse(+el.dataset.i); });
+  document.querySelectorAll(".item[data-k]").forEach(el => {
+    el.addEventListener("click", () => openCourse(el.dataset.k));
+    el.addEventListener("keydown", e => { if (e.key === "Enter") openCourse(el.dataset.k); });
   });
   document.getElementById("closeSheet").addEventListener("click", closeCourse);
   document.getElementById("sheetBg").addEventListener("click", closeCourse);
